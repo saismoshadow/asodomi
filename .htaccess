@@ -1,0 +1,56 @@
+# ============================================================
+# ASODOMI – Configuración Apache
+# URLs limpias: /es/servicios → index.php?lang=es&page=servicios
+# ============================================================
+
+Options -Indexes
+ServerSignature Off
+
+# Página de inicio por idioma
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Servi direttamente i file e le cartelle esistenti (CSS, immagini, JS)
+    # senza farli passare dal router. Evita che /admin/admin.css venga
+    # intercettato dalla regola admin qui sotto.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Area amministrazione: /admin/... → admin/index.php
+    RewriteRule ^admin(/(.*))?$ admin/index.php [L,QSA]
+
+    # Dettaglio articolo blog: /es/blog/mio-articolo
+    RewriteRule ^([a-z]{2})/blog/([a-z0-9-]+)/?$ index.php?lang=$1&page=blog&slug=$2 [L,QSA]
+
+    # /es  o  /es/
+    RewriteRule ^([a-z]{2})/?$ index.php?lang=$1 [L,QSA]
+
+    # /es/servicios  o  /es/servicios/
+    RewriteRule ^([a-z]{2})/([a-z-]+)/?$ index.php?lang=$1&page=$2 [L,QSA]
+</IfModule>
+
+# ── Protección de archivos internos ──────────────────────────────
+<FilesMatch "\.(md|log|ini|sql|bak)$">
+    Require all denied
+</FilesMatch>
+
+# Cabeceras de seguridad básicas
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compresión y caché para recursos estáticos
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
+</IfModule>
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+</IfModule>

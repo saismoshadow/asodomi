@@ -1,0 +1,137 @@
+/* ============================================================
+   ASODOMI – Stili del pannello di gestione
+   ============================================================ */
+
+.admin-body { background: #f2f4f8; }
+
+/* Barra superiore */
+.admin-topbar {
+    background: var(--azul-oscuro);
+    border-bottom: 4px solid var(--rojo);
+    position: sticky; top: 0; z-index: 50;
+}
+.admin-topbar-inner {
+    width: min(1200px, 95%); margin-inline: auto;
+    display: flex; align-items: center; gap: 1.5rem; padding-block: .6rem;
+}
+.admin-topbar .brand-name { font-size: 1.25rem; color: #fff; }
+.admin-topbar .brand small { color: rgba(255,255,255,.55); margin-left: .3rem; }
+
+.admin-nav { display: flex; gap: .2rem; flex-wrap: wrap; }
+.admin-nav a {
+    color: rgba(255,255,255,.85); text-decoration: none;
+    padding: .45rem .85rem; border-radius: 8px; font-weight: 600; font-size: .92rem;
+}
+.admin-nav a:hover { background: rgba(255,255,255,.12); color: #fff; }
+.admin-nav a.active { background: var(--rojo); color: #fff; }
+
+.admin-user {
+    margin-left: auto; display: flex; align-items: center; gap: .7rem;
+    color: rgba(255,255,255,.85); font-size: .9rem;
+}
+.admin-user .btn-sm { padding: .35rem .9rem; font-size: .82rem; }
+.admin-user .btn-ghost { color: #fff; border-color: rgba(255,255,255,.5); }
+
+/* Contenuto */
+.admin-main { width: min(1200px, 95%); margin-inline: auto; padding-block: 2rem 4rem; }
+.admin-main h1 { color: var(--azul-oscuro); margin: .2rem 0 .8rem; }
+.admin-main h2 { color: var(--azul-oscuro); margin-top: 2rem; }
+
+.page-title-row {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;
+}
+
+/* Pannelli e statistiche */
+.panel {
+    background: #fff; border: 1px solid var(--borde); border-radius: var(--radio);
+    padding: 1.4rem; box-shadow: var(--sombra); margin-bottom: 1.5rem;
+}
+.stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; margin-bottom: 2rem;
+}
+.stat-card {
+    background: #fff; border: 1px solid var(--borde); border-radius: var(--radio);
+    padding: 1.2rem 1.4rem; text-decoration: none; box-shadow: var(--sombra);
+    transition: transform .15s;
+}
+.stat-card:hover { transform: translateY(-3px); }
+.stat-card strong { display: block; font-size: 2rem; color: var(--azul); }
+.stat-card span { color: var(--texto-suave); font-size: .9rem; }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+@media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+
+/* Tabelle */
+.tabella { width: 100%; border-collapse: collapse; font-size: .93rem; }
+.tabella th {
+    text-align: left; color: var(--texto-suave); font-size: .78rem;
+    text-transform: uppercase; letter-spacing: .6px;
+    border-bottom: 2px solid var(--borde); padding: .5rem .6rem;
+}
+.tabella td { padding: .65rem .6rem; border-bottom: 1px solid var(--borde); vertical-align: top; }
+.tabella tr:last-child td { border-bottom: 0; }
+.tabella a { color: var(--azul); font-weight: 600; text-decoration: none; }
+.tabella a:hover { text-decoration: underline; }
+
+.azioni { display: flex; gap: .4rem; align-items: center; }
+.azioni form { display: inline; }
+
+.stato { font-weight: 700; font-size: .8rem; white-space: nowrap; }
+.stato-pubblicato, .stato-attivo, .stato-admin { color: var(--ok); }
+.stato-bozza, .stato-in_attesa, .stato-redattore { color: #b07d00; }
+.stato-dimesso { color: var(--texto-suave); }
+
+.btn-sm { padding: .4rem 1rem; font-size: .84rem; }
+.btn-danger { background: transparent; color: var(--err); border-color: var(--err); }
+.btn-danger:hover { background: var(--err); color: #fff; }
+
+/* Filtri */
+.filtri { color: var(--texto-suave); font-size: .92rem; }
+.filtri a { color: var(--azul); text-decoration: none; font-weight: 600; }
+.filtri a.active { color: var(--rojo); }
+
+/* Form pannello */
+.panel-form { max-width: 720px; }
+.form-actions { display: flex; gap: .7rem; flex-wrap: wrap; }
+.hint { color: var(--texto-suave); font-size: .83rem; margin: -.4rem 0 .6rem; }
+
+.check-label { display: flex !important; gap: .6rem; align-items: flex-start; font-weight: 500 !important; }
+.check-label input[type="checkbox"] { width: auto; margin-top: .25rem; }
+
+/* Login */
+.login-body { display: grid; place-items: center; min-height: 100vh; background: linear-gradient(135deg, var(--azul-oscuro), var(--azul)); }
+.login-box {
+    background: #fff; border-radius: var(--radio); box-shadow: 0 20px 60px rgba(0,0,0,.3);
+    padding: 2.4rem; width: min(400px, 92%);
+}
+.login-box h1 { font-size: 1.3rem; color: var(--azul-oscuro); text-align: center; margin: .2rem 0 1.4rem; }
+.login-box .brand-name { font-size: 1.8rem; display: block; margin-bottom: .4rem; }
+
+/* Video responsive nel blog pubblico */
+.video-box {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: var(--radio); margin-bottom: 1.8rem; box-shadow: var(--sombra);
+}
+.video-box iframe {
+    position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+
+/* Corpo articolo */
+.article-body { font-size: 1.05rem; line-height: 1.75; }
+.article-body h2 { color: var(--azul-oscuro); margin-top: 1.8rem; }
+.article-body img { border-radius: var(--radio); }
+.article-body blockquote {
+    border-left: 4px solid var(--rojo); margin: 1.2rem 0; padding: .4rem 1.2rem;
+    background: #fff; border-radius: 0 10px 10px 0;
+}
+.back-link { color: var(--azul); text-decoration: none; font-weight: 600; font-size: .9rem; }
+.back-link:hover { text-decoration: underline; }
+
+@media (max-width: 760px) {
+    .admin-topbar-inner { flex-direction: column; align-items: stretch; gap: .6rem; }
+    .admin-user { margin-left: 0; justify-content: space-between; }
+    .tabella { font-size: .85rem; }
+    .tabella td, .tabella th { padding: .45rem .35rem; }
+}

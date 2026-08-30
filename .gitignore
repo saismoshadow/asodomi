@@ -1,0 +1,36 @@
+# ═══════════════════════════════════════════════════════
+# ASODOMI — file esclusi dal repository Git
+# (soprattutto perché il repo è PUBBLICO: mai committare
+#  credenziali o dati reali dei soci)
+# ═══════════════════════════════════════════════════════
+
+# ── Credenziali / configurazione locale ──────────────────
+inc/config.php
+
+# ── Dati reali: file caricati dai soci ───────────────────
+uploads/
+!uploads/.htaccess
+!uploads/index.html
+
+# ── File di sviluppo / residui / installer ────────────────
+router-dev.php
+index.html_old
+install.php
+info.php
+
+# ── Note personali di ripristino (puo' contenere dettagli)─
+NOTE.md
+
+# ── File temporanei di sistema/editor ─────────────────────
+*.log
+*.tmp
+*.bak
+.bak_*
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Sistemi / cache ───────────────────────────────────────
+*.sql
+*.sql.gz
