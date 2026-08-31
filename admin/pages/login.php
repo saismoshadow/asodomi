@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /** Login del pannello */
 ?>
 <!DOCTYPE html>

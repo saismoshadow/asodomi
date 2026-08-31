@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Cabecera común del sitio.
  * Variables esperadas: $t (textos del idioma), $lang, $page

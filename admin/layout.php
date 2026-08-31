@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * Layout del pannello admin.
  * Variabili: $utente, $route

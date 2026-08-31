@@ -1,16 +1,16 @@
-﻿<?php
+<?php
+// Buffer de salida antes de cualquier require: garantiza que ningún BOM,
+// aviso o contenido emitido por los archivos incluidos rompa los header('Location').
+if (!ob_get_level()) {
+    ob_start();
+}
+
 /**
  * ASODOMI – Procesamiento de los formularios (ayuda y cita).
  * Recibe el POST, valida, envía el email y redirige de vuelta.
  */
 
 require_once __DIR__ . '/inc/functions.php';
-
-// Buffer de salida: garantiza que los header('Location') funcionen incluso
-// si alguna extensión/aviso emitiera contenido antes de redirigir.
-if (!ob_get_level()) {
-    ob_start();
-}
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . url(DEFAULT_LANG, 'inicio'));
