@@ -30,7 +30,7 @@ define('CONTACT_PHONE', '+41 779 643 401');
 define('CONTACT_WHATSAPP', '+41779643401');         // Solo números, sin espacios
 define('CONTACT_ADDRESS', 'Via Scazziga 8, 6600 Muralto, Svizzera');
 define('FACEBOOK_URL', 'https://www.facebook.com/asodomich/');
-define('INSTAGRAM_URL', 'https://instagram.com/asodomich/');
+define('INSTAGRAM_URL', 'https://instagram.com/asodomich');
 
 // Asunto de los emails que envían los formularios
 define('MAIL_SUBJECT_AYUDA', '[ASODOMI] Nueva solicitud de ayuda');
