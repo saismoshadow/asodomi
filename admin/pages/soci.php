@@ -37,7 +37,18 @@ $etichette_stato = ['attivo' => '● attivo', 'in_attesa' => '◐ in attesa', 'd
                     <td><?= e($s['email']) ?></td>
                     <td><?= e($s['telefono'] ?: '–') ?></td>
                     <td><?= e($s['comune'] ?: '–') ?></td>
-                    <td><span class="stato stato-<?= e($s['stato']) ?>"><?= $etichette_stato[$s['stato']] ?></span></td>
+                    <td>
+                        <form method="post" action="<?= e(admin_url('cambia-stato-socio')) ?>" class="stato-form">
+                            <?= csrf_campo() ?>
+                            <input type="hidden" name="id" value="<?= (int)$s['id'] ?>">
+                            <input type="hidden" name="filtro" value="<?= e($filtro) ?>">
+                            <select class="stato-select stato-<?= e($s['stato']) ?>" name="stato" onchange="this.form.submit()">
+                                <?php foreach ($etichette_stato as $st => $label): ?>
+                                    <option value="<?= e($st) ?>" <?= $s['stato'] === $st ? 'selected' : '' ?>><?= $label ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </form>
+                    </td>
                     <td><?= e(date('d.m.Y', strtotime($s['creato_il']))) ?></td>
                     <td class="azioni">
                         <a class="btn btn-ghost btn-sm" href="<?= e(admin_url('socio') . '&id=' . (int)$s['id']) ?>">Apri</a>

@@ -14,7 +14,7 @@ $gruppo_attivo = [
     'dashboard' => ['dashboard'],
     'articoli'  => ['articoli', 'articolo', 'salva-articolo', 'elimina-articolo'],
     'documenti' => ['documenti', 'salva-documento', 'elimina-documento'],
-    'soci'      => ['soci', 'socio', 'salva-socio', 'elimina-socio', 'soci-export'],
+    'soci'      => ['soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export'],
     'utenti'    => ['utenti', 'salva-utente', 'elimina-utente'],
 ];
 $ruolo_utente = $utente['ruolo'];

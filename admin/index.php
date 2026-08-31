@@ -44,7 +44,7 @@ if (!$utente) {
 
 // Soci e utenti: solo amministratori (i redattori gestiscono solo il blog)
 $solo_admin = [
-    'soci', 'socio', 'salva-socio', 'elimina-socio', 'soci-export',
+    'soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',
     'utenti', 'salva-utente', 'elimina-utente',
 ];
@@ -57,7 +57,7 @@ $pagine_admin = [
     'dashboard',
     'articoli', 'articolo', 'salva-articolo', 'elimina-articolo',
     'documenti', 'salva-documento', 'elimina-documento',
-    'soci', 'socio', 'salva-socio', 'elimina-socio', 'soci-export',
+    'soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',
     'utenti', 'salva-utente', 'elimina-utente',
 ];
@@ -69,7 +69,7 @@ if (!in_array($route, $pagine_admin, true)) {
 $senza_layout = [
     'salva-articolo', 'elimina-articolo',
     'salva-documento', 'elimina-documento',
-    'salva-socio', 'elimina-socio', 'soci-export',
+    'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',
     'salva-utente', 'elimina-utente',
 ];
