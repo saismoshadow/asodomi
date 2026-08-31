@@ -26,7 +26,7 @@ require_once __DIR__ . '/functions.php';
             <ul>
                 <li><a href="mailto:<?= e(CONTACT_EMAIL) ?>"><?= e(CONTACT_EMAIL) ?></a></li>
                 <li><a href="tel:<?= e(preg_replace('/\s+/', '', CONTACT_PHONE)) ?>"><?= e(CONTACT_PHONE) ?></a></li>
-                <li><a href="https://wa.me/<?= e(CONTACT_WHATSAPP) ?>" target="_blank" rel="noopener">WhatsApp</a></li>
+                <li><a href="https://wa.me/<?= e(ltrim(CONTACT_WHATSAPP, '+')) ?>" target="_blank" rel="noopener">WhatsApp</a></li>
                 <li><?= e(CONTACT_ADDRESS) ?></li>
             </ul>
         </div>

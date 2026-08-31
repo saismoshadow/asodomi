@@ -26,8 +26,8 @@ $GLOBALS['ASODOMI_PAGES'] = ['inicio', 'servicios', 'eventos', 'ayuda', 'cita', 
 
 // ── Datos de contacto (REEMPLAZAR con los datos reales) ──────────────
 define('CONTACT_EMAIL', 'info@asodomi.com');        // Email donde llegan las solicitudes
-define('CONTACT_PHONE', '+41 00 000 00 00');
-define('CONTACT_WHATSAPP', '+41000000000');         // Solo números, sin espacios
+define('CONTACT_PHONE', '+41 779 643 401');
+define('CONTACT_WHATSAPP', '+41779643401');         // Solo números, sin espacios
 define('CONTACT_ADDRESS', 'Via Scazziga 8, 6600 Muralto, Svizzera');
 define('FACEBOOK_URL', 'https://facebook.com/asodomi');
 define('INSTAGRAM_URL', 'https://instagram.com/asodomi');

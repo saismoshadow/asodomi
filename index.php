@@ -397,7 +397,7 @@ case 'contacto': ?>
             </div>
             <div class="contact-card">
                 <h3>💬 <?= e($t['contacto']['whatsapp_label']) ?></h3>
-                <p><a class="btn btn-whatsapp" href="https://wa.me/<?= e(CONTACT_WHATSAPP) ?>" target="_blank" rel="noopener"><?= e($t['contacto']['whatsapp_cta']) ?></a></p>
+                <p><a class="btn btn-whatsapp" href="https://wa.me/<?= e(ltrim(CONTACT_WHATSAPP, '+')) ?>" target="_blank" rel="noopener"><?= e($t['contacto']['whatsapp_cta']) ?></a></p>
             </div>
             <div class="contact-card">
                 <h3>📍 <?= e($t['contacto']['address_label']) ?></h3>
