@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Area amministrazione esclusa
+Disallow: /admin/
+
+# Pagine di servizio riservate
+Disallow: /enviar.php
+Disallow: /upload-socio.php
+Disallow: /download-documento.php
+
+# Mappa del sito
+Sitemap: https://asodomi.com/sitemap.xml

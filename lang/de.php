@@ -8,10 +8,61 @@ return [
         'name' => 'Deutsch',
         'title_site' => 'ASODOMI – Verein der Dominikaner in der Schweiz',
         'description' => 'ASODOMI hilft Dominikanern in der Schweiz bei Behördengängen, Dokumenten, Übersetzungen und administrativen Fragen. Alle unsere Dienstleistungen sind kostenlos.',
+        'pages' => [
+            'inicio' => [
+                'title' => 'ASODOMI – Verein der Dominikaner in der Schweiz | Hilfe und Integration',
+                'description' => 'Verein der Dominikaner in der Schweiz: kostenlose Hilfe bei Behördengängen, Dokumenten, Übersetzungen und administrativen Fragen für die Integration im Tessin und in der ganzen Schweiz.',
+            ],
+            'servicios' => [
+                'title' => 'Kostenlose Dienstleistungen für die dominikanische Gemeinschaft in der Schweiz | ASODOMI',
+                'description' => 'Entdecken Sie die kostenlosen Dienstleistungen von ASODOMI für die dominikanische Gemeinschaft in der Schweiz: Behördengänge, Übersetzungen, Dokumente und Integrationsberatung.',
+            ],
+            'eventos' => [
+                'title' => 'Veranstaltungen und Neuigkeiten der dominikanischen Gemeinschaft in der Schweiz | ASODOMI',
+                'description' => 'Bleiben Sie informiert über Veranstaltungen, Treffen und Neuigkeiten der dominikanischen Gemeinschaft in der Schweiz. Kulturelle und soziale Aktivitäten von ASODOMI.',
+            ],
+            'blog' => [
+                'title' => 'Blog und Neuigkeiten für Dominikaner in der Schweiz | ASODOMI',
+                'description' => 'Artikel, Neuigkeiten und nützliche Tipps für die dominikanische Gemeinschaft in der Schweiz. Informationen zu Integration, Dokumenten und Leben in der Schweiz.',
+            ],
+            'ayuda' => [
+                'title' => 'Kostenlose Hilfe anfordern | ASODOMI – Dominikaner in der Schweiz',
+                'description' => 'Brauchen Sie Hilfe? ASODOMI bietet der dominikanischen Gemeinschaft in der Schweiz kostenlose Unterstützung an: senden Sie Ihre Anfrage und wir melden uns.',
+            ],
+            'cita' => [
+                'title' => 'Termin buchen | ASODOMI – Dominikanischer Verein',
+                'description' => 'Buchen Sie einen Termin bei ASODOMI für kostenlose Unterstützung bei Behördengängen, Dokumenten und administrativen Fragen in der Schweiz.',
+            ],
+            'contacto' => [
+                'title' => 'Kontakt | ASODOMI – Verein der Dominikaner in der Schweiz',
+                'description' => 'Kontaktieren Sie ASODOMI: gemeinnütziger Verein, der der dominikanischen Gemeinschaft in der Schweiz hilft. Telefon, E-Mail, WhatsApp und Adresse in Muralto.',
+            ],
+            'iscrizione' => [
+                'title' => 'Werden Sie ASODOMI-Mitglied | Dominikanischer Verein in der Schweiz',
+                'description' => 'Treten Sie ASODOMI bei: gemeinnütziger Verein der dominikanischen Gemeinschaft in der Schweiz. Kostenlose Mitgliedschaft und Vorteile für Mitglieder.',
+            ],
+            'area-soci' => [
+                'title' => 'Geschützter Mitgliederbereich | ASODOMI',
+                'description' => 'Bereich für ASODOMI-Mitglieder: Dokumente, Neuigkeiten und exklusive Dienstleistungen für die dominikanische Gemeinschaft in der Schweiz.',
+            ],
+            'privacy' => [
+                'title' => 'Datenschutzerklärung | ASODOMI',
+                'description' => 'Informationen zum Datenschutz von ASODOMI: wie wir Ihre personenbezogenen Daten behandeln. Transparenz und Datenschutz.',
+            ],
+            'nosotros' => [
+                'title' => 'Über uns | ASODOMI – Verein der Dominikaner in der Schweiz',
+                'description' => 'ASODOMI ist ein gemeinnütziger Verein, der die dominikanische Gemeinschaft in der Schweiz vom Tessin aus unterstützt. Entdecken Sie Mission, Werte und Aktivitäten.',
+            ],
+            'faq' => [
+                'title' => 'Häufig gestellte Fragen | ASODOMI – Hilfe für Dominikaner in der Schweiz',
+                'description' => 'Antworten auf die häufigsten Fragen der dominikanischen Gemeinschaft in der Schweiz: Dokumente, Aufenthaltsbewilligungen, Integration, kostenlose ASODOMI-Dienstleistungen.',
+            ],
+        ],
     ],
 
     'nav' => [
         'inicio'     => 'Startseite',
+        'nosotros'   => 'Über uns',
         'servicios'  => 'Dienstleistungen',
         'eventos'    => 'Anlässe',
         'blog'       => 'Blog',
@@ -19,6 +70,7 @@ return [
         'contacto'   => 'Kontakt',
         'iscrizione' => 'Beitreten',
         'ayuda'      => 'Hilfe',
+        'faq'        => 'FAQ',
     ],
     'cta_header' => 'Wir helfen kostenlos',
 
@@ -234,5 +286,33 @@ return [
         'rights' => 'Alle Rechte vorbehalten.',
         'made_with' => 'Mit Liebe gemacht für die dominikanische Gemeinschaft in der Schweiz.',
         'installa'  => 'App installieren',
+    ],
+
+    'nosotros' => [
+        'title' => 'Über uns',
+        'intro' => 'ASODOMI ist ein gemeinnütziger Verein, der die dominikanische Gemeinschaft in der Schweiz seit Jahren begleitet, mit Sitz im Kanton Tessin in Muralto.',
+        'mission_t' => 'Unsere Mission',
+        'mission_d' => 'Wir helfen Dominikanern und Dominikanerinnen in der Schweiz, Bürokratie, Dokumente und Integration zu bewältigen – kostenlos und mit einer einfachen, klaren und respektvollen Hilfe.',
+        'vision_t' => 'Was wir tun',
+        'vision_d' => 'Wir bieten administrative Beratung, Unterstützung bei Behördengängen und Dokumenten, Übersetzungen und kulturelle Aktivitäten. Niemand soll sich vor Bewilligungen, Ämtern und Regeln allein fühlen.',
+        'values_t' => 'Unsere Werte',
+        'values' => [
+            'Kostenlosigkeit und Solidarität: Wir helfen denen, die es am meisten brauchen.',
+            'Respekt und Vertraulichkeit gegenüber jeder Person, die wir aufnehmen.',
+            'Integration und Gemeinschaft: eine Brücke zwischen der Dominikanischen Republik und der Schweiz.',
+        ],
+    ],
+
+    'faq' => [
+        'title' => 'Häufig gestellte Fragen',
+        'intro' => 'Die Antworten auf die häufigsten Fragen der dominikanischen Gemeinschaft in der Schweiz. Wenn Sie nicht finden, was Sie suchen, kontaktieren Sie uns: Wir helfen kostenlos.',
+        'items' => [
+            ['Welche Dokumente brauche ich, um in der Schweiz zu leben?', 'Das hängt von Ihrer Bewilligungsart und Ihrer Situation ab. Wir helfen Ihnen zu verstehen, welche Dokumente Sie brauchen und wie Sie sie vorbereiten – ohne Kosten.'],
+            ['Wie kann ich eine Aufenthaltsbewilligung beantragen oder verlängern?', 'Das Verfahren hängt vom Wohnkanton ab. Wir beraten Sie zu den Unterlagen und den Schritten für den Antrag oder die Verlängerung.'],
+            ['Sind die Dienstleistungen wie Übersetzungen wirklich kostenlos?', 'In dieser Anfangsphase sind alle unsere Dienstleistungen für die dominikanische Gemeinschaft in der Schweiz kostenlos.'],
+            ['Wie werde ich ASODOMI-Mitglied?', 'Der Beitritt ist kostenlos: Gehen Sie auf die Seite Beitreten und füllen Sie das Formular aus. Sie erhalten sofort die Informationen.'],
+            ['Sprechen Sie andere Sprachen?', 'Ja: Wir sprechen Italienisch, Spanisch, Französisch und Deutsch, um der Gemeinschaft in der ganzen Schweiz zu helfen.'],
+            ['Wo ist der Sitz von ASODOMI?', 'Unser Sitz ist in Muralto im Kanton Tessin. Sie können uns schreiben oder anrufen, um einen Termin zu vereinbaren.'],
+        ],
     ],
 ];

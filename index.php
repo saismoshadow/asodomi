@@ -787,6 +787,73 @@ case 'privacy': ?>
 
 <?php break;
 
+case 'nosotros': ?>
+
+    <section class="page-head">
+        <div class="container narrow">
+            <h1><?= e($t['nosotros']['title']) ?></h1>
+            <p class="lead"><?= e($t['nosotros']['intro']) ?></p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container narrow article-body">
+            <h2><?= e($t['nosotros']['mission_t']) ?></h2>
+            <p><?= e($t['nosotros']['mission_d']) ?></p>
+            <h2><?= e($t['nosotros']['vision_t']) ?></h2>
+            <p><?= e($t['nosotros']['vision_d']) ?></p>
+            <h2><?= e($t['nosotros']['values_t']) ?></h2>
+            <ul>
+                <?php foreach ($t['nosotros']['values'] as $val): ?>
+                    <li><?= e($val) ?></li>
+                <?php endforeach; ?>
+            </ul>
+            <p class="center" style="margin-top:2rem">
+                <a class="btn btn-primary" href="<?= e(url($lang, 'contacto')) ?>">Contatti</a>
+                <a class="btn btn-ghost" href="<?= e(url($lang, 'iscrizione')) ?>">Unisciti</a>
+            </p>
+        </div>
+    </section>
+
+<?php break;
+
+case 'faq': ?>
+
+    <section class="page-head">
+        <div class="container narrow">
+            <h1><?= e($t['faq']['title']) ?></h1>
+            <p class="lead"><?= e($t['faq']['intro']) ?></p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container narrow">
+            <?php foreach ($t['faq']['items'] as [$q, $a]): ?>
+                <details class="faq-item">
+                    <summary><?= e($q) ?></summary>
+                    <p><?= e($a) ?></p>
+                </details>
+            <?php endforeach; ?>
+        </div>
+    </section>
+
+<script type="application/ld+json">
+<?= json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => array_map(function ($item) {
+        [$q, $a] = $item;
+        return [
+            '@type' => 'Question',
+            'name' => $q,
+            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $a],
+        ];
+    }, $t['faq']['items']),
+], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
+</script>
+
+<?php break;
+
 endswitch;
 
 require __DIR__ . '/inc/footer.php';

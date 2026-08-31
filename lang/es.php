@@ -9,10 +9,61 @@ return [
         'name' => 'Español',
         'title_site' => 'ASODOMI – Asociación de Dominicanos en Suiza',
         'description' => 'ASODOMI ayuda a los dominicanos en Suiza con trámites, documentos, traducciones y orientación administrativa. Todos nuestros servicios son gratuitos.',
+        'pages' => [
+            'inicio' => [
+                'title' => 'ASODOMI – Asociación de Dominicanos en Suiza | Ayuda e integración',
+                'description' => 'Asociación de dominicanos en Suiza: ayuda gratuita con trámites, documentos, traducciones y orientación administrativa para la integración en el Tesino y toda Suiza.',
+            ],
+            'servicios' => [
+                'title' => 'Servicios gratuitos para la comunidad dominicana en Suiza | ASODOMI',
+                'description' => 'Descubre los servicios gratuitos de ASODOMI para la comunidad dominicana en Suiza: trámites administrativos, traducciones, documentos y orientación para la integración.',
+            ],
+            'eventos' => [
+                'title' => 'Eventos y noticias de la comunidad dominicana en Suiza | ASODOMI',
+                'description' => 'Mantente al día de eventos, encuentros y noticias de la comunidad dominicana en Suiza. Actividades culturales y sociales ASODOMI.',
+            ],
+            'blog' => [
+                'title' => 'Blog y noticias para dominicanos en Suiza | ASODOMI',
+                'description' => 'Artículos, noticias y consejos útiles para la comunidad dominicana residente en Suiza. Actualizaciones sobre integración, documentos y vida en Suiza.',
+            ],
+            'ayuda' => [
+                'title' => 'Solicita ayuda gratuita | ASODOMI – Dominicanos en Suiza',
+                'description' => '¿Necesitas ayuda? ASODOMI ofrece asistencia gratuita a la comunidad dominicana en Suiza: envía tu solicitud y te contactaremos.',
+            ],
+            'cita' => [
+                'title' => 'Reserva una cita | ASODOMI – Asociación dominicana',
+                'description' => 'Reserva una cita con ASODOMI para recibir asistencia gratuita sobre trámites, documentos y orientación administrativa en Suiza.',
+            ],
+            'contacto' => [
+                'title' => 'Contacto | ASODOMI – Asociación de Dominicanos en Suiza',
+                'description' => 'Contacta con ASODOMI: asociación sin ánimo de lucro que ayuda a la comunidad dominicana en Suiza. Teléfono, email, WhatsApp y dirección en Muralto.',
+            ],
+            'iscrizione' => [
+                'title' => 'Hazte socio de ASODOMI | Asociación dominicana en Suiza',
+                'description' => 'Únete a ASODOMI: asociación sin ánimo de lucro de la comunidad dominicana en Suiza. Inscripción gratuita y beneficios para los socios.',
+            ],
+            'area-soci' => [
+                'title' => 'Área socios reservada | ASODOMI',
+                'description' => 'Área reservada a los socios ASODOMI: documentos, noticias dedicadas y servicios exclusivos para la comunidad dominicana en Suiza.',
+            ],
+            'privacy' => [
+                'title' => 'Política de Privacidad | ASODOMI',
+                'description' => 'Información sobre la privacidad de ASODOMI: cómo tratamos tus datos personales. Transparencia y protección de datos.',
+            ],
+            'nosotros' => [
+                'title' => 'Quiénes somos | ASODOMI – Asociación de Dominicanos en Suiza',
+                'description' => 'ASODOMI es una asociación sin ánimo de lucro que apoya a la comunidad dominicana en Suiza desde el Tesino. Descubre misión, valores y actividades.',
+            ],
+            'faq' => [
+                'title' => 'Preguntas frecuentes | ASODOMI – Ayuda para dominicanos en Suiza',
+                'description' => 'Respuestas a las preguntas más comunes de la comunidad dominicana en Suiza: documentos, permisos, integración, servicios gratuitos ASODOMI.',
+            ],
+        ],
     ],
 
     'nav' => [
         'inicio'     => 'Inicio',
+        'nosotros'   => 'Quiénes somos',
         'servicios'  => 'Servicios',
         'eventos'    => 'Eventos',
         'blog'       => 'Blog',
@@ -20,6 +71,7 @@ return [
         'contacto'   => 'Contacto',
         'iscrizione' => 'Únete',
         'ayuda'      => 'Ayuda',
+        'faq'        => 'Preguntas frecuentes',
     ],
     'cta_header' => 'Te ayudamos gratis',
 
@@ -235,5 +287,33 @@ return [
         'rights' => 'Todos los derechos reservados.',
         'made_with' => 'Hecho con cariño para la comunidad dominicana en Suiza.',
         'installa'  => 'Instalar app',
+    ],
+
+    'nosotros' => [
+        'title' => 'Quiénes somos',
+        'intro' => 'ASODOMI es una asociación sin fines de lucro que acompaña desde hace años a la comunidad dominicana en Suiza, con sede en el cantón del Tesino, en Muralto.',
+        'mission_t' => 'Nuestra misión',
+        'mission_d' => 'Ayudar a los dominicanos y dominicanas que viven en Suiza a afrontar la burocracia, los documentos y la integración, de forma gratuita y con una ayuda sencilla, clara y respetuosa.',
+        'vision_t' => 'Qué hacemos',
+        'vision_d' => 'Ofrecemos orientación administrativa, apoyo con trámites y documentos, traducciones y actividades culturales. Queremos que nadie se sienta solo frente a permisos, oficinas y reglas.',
+        'values_t' => 'Nuestros valores',
+        'values' => [
+            'Gratuidad y solidaridad: ayudamos a quien más lo necesita.',
+            'Respeto y confidencialidad con cada persona que acogemos.',
+            'Integración y comunidad: un puente entre la República Dominicana y Suiza.',
+        ],
+    ],
+
+    'faq' => [
+        'title' => 'Preguntas frecuentes',
+        'intro' => 'Las respuestas a las preguntas más comunes de la comunidad dominicana en Suiza. Si no encuentras lo que buscas, contáctanos: te ayudamos gratis.',
+        'items' => [
+            ['¿Qué documentos necesito para vivir en Suiza?', 'Depende de tu tipo de permiso y de tu situación. Te ayudamos a entender qué documentos necesitas y cómo prepararlos, sin coste.'],
+            ['¿Cómo puedo solicitar o renovar un permiso de residencia?', 'Los trámites dependen del cantón de residencia. Te orientamos sobre la documentación y los pasos para la solicitud o la renovación.'],
+            ['¿Los servicios como las traducciones son realmente gratuitos?', 'En esta etapa inicial todos nuestros servicios son gratuitos para la comunidad dominicana en Suiza.'],
+            ['¿Cómo me hago socio de ASODOMI?', 'La inscripción es gratuita: ve a la página Únete y completa el formulario. Recibirás la información de inmediato.'],
+            ['¿Hablan otros idiomas?', 'Sí: hablamos italiano, español, francés y alemán para ayudar a la comunidad en toda Suiza.'],
+            ['¿Dónde está la sede de ASODOMI?', 'Nuestra sede está en Muralto, en el cantón del Tesino. Puedes escribirnos o llamarnos para una cita.'],
+        ],
     ],
 ];

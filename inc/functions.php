@@ -55,6 +55,49 @@ function url(string $lang, string $page = ''): string
     return base_url() . '/' . $lang . ($page !== '' ? '/' . $page : '');
 }
 
+/**
+ * Devuelve la URL base absoluta del sitio (sin barra final).
+ * Permite fijarla con SITE_URL en config para producción; si no, la deduce del host.
+ */
+function asodomi_site_url(): string
+{
+    if (defined('SITE_URL') && SITE_URL !== '') {
+        return rtrim(SITE_URL, '/');
+    }
+    $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+        || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
+    $scheme = $https ? 'https' : 'http';
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    return $scheme . '://' . $host . rtrim(base_url(), '/');
+}
+
+/**
+ * URL absoluta canónica de una página/lang.
+ * Para la home it (idioma de defecto) devuelve la raíz "/"; para las demás usa el prefijo.
+ */
+function asodomi_url_canonica(string $lang, string $page): string
+{
+    $pagina = ($page === 'inicio') ? '' : $page;
+    // La home del idioma principal queda en la raíz sin prefijo
+    if ($lang === DEFAULT_LANG && $pagina === '') {
+        return asodomi_site_url() . '/';
+    }
+    return asodomi_site_url() . '/' . $lang . ($pagina !== '' ? '/' . $pagina : '');
+}
+
+/**
+ * Title/meta description optimizados por página y por idioma.
+ * Devuelve [title, description]; vuelve a un valor por defecto si no existen entradas.
+ */
+function asodomi_meta_pagina(array $t, string $page): array
+{
+    $pagina = isset($t['meta']['pages'][$page]) ? $page : 'inicio';
+    $p = $t['meta']['pages'][$pagina] ?? [];
+    $title = $p['title'] ?? ($t['meta']['title_site'] . ($page === 'inicio' ? '' : ' – ' . ($t['nav'][$page] ?? '')));
+    $desc  = $p['description'] ?? $t['meta']['description'];
+    return [trim($title), trim($desc)];
+}
+
 /** Ruta a un recurso estático: asset('/enviar.php') */
 function asset(string $path): string
 {
