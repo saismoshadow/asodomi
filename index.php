@@ -433,7 +433,7 @@ case 'iscrizione':
         $socio_conferma = $stmt->fetch() ?: null;
     }
 
-    $socio_modifica = (int)($_GET['modifica'] ?? 0);
+    $socio_modifica = (isset($_GET['modifica']) && (int)($_GET['id'] ?? 0) > 0) ? (int)$_GET['id'] : 0;
     if ($socio_modifica > 0) {
         $stmt = db()->prepare('SELECT id, nome, email, telefono, indirizzo, comune FROM soci WHERE id = ?');
         $stmt->execute([$socio_modifica]);
