@@ -140,6 +140,63 @@ function asodomi_modalita_icona(string $modalita): string
     return $map[$modalita] ?? '📍';
 }
 
+/**
+ * Convierte URL nudos (http/https) que no estén ya dentro de un <a ...>...</a>
+ * en enlaces clicables con target="_blank" rel="noopener noreferrer".
+ * Escapa el texto de entrada (una sola vez) y deja intactas las etiquetas HTML
+ * y los enlaces ya existentes. Usar sobre contenido/HTML en crudo (no escapado).
+ */
+function asodomi_linkify(?string $html): string
+{
+    $html = (string)$html;
+    if ($html === '') {
+        return $html;
+    }
+    $out = '';
+    // Divide el HTML en etiquetas <...> y texto plano
+    $partes = preg_split('~(<[^>]+>)~', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
+    $dentro_a = false;
+    foreach ($partes as $parte) {
+        if ($parte === '') {
+            continue;
+        }
+        if (preg_match('~^<[^>]+>$~', $parte)) {
+            // Es una etiqueta: se deja tal cual
+            $out .= $parte;
+            if (preg_match('~^<a\b~i', $parte)) {
+                $dentro_a = true;
+            } elseif (preg_match('~^</a~i', $parte)) {
+                $dentro_a = false;
+            }
+            continue;
+        }
+        // Texto plano: escapar y convertir URLs nudos (solo si no estamos dentro de <a>)
+        if ($dentro_a) {
+            $out .= htmlspecialchars($parte, ENT_QUOTES, 'UTF-8');
+            continue;
+        }
+        // Dividimos el texto por URLs: escapamos lo que no es URL y creamos el link en la URL
+        $trozos = preg_split(
+            '~((?:https?://)[^\s<>\'\"\[\]]+[^\s<>\'\".),:;!?\[\]])~i',
+            $parte,
+            -1,
+            PREG_SPLIT_DELIM_CAPTURE
+        );
+        foreach ($trozos as $trozo) {
+            if ($trozo === '') {
+                continue;
+            }
+            if (preg_match('~^https?://~i', $trozo)) {
+                $esc = htmlspecialchars($trozo, ENT_QUOTES, 'UTF-8');
+                $out .= '<a href="' . $esc . '" target="_blank" rel="noopener noreferrer">' . $esc . '</a>';
+            } else {
+                $out .= htmlspecialchars($trozo, ENT_QUOTES, 'UTF-8');
+            }
+        }
+    }
+    return $out;
+}
+
 /** Formatea una fecha YYYY-MM-DD según el idioma */
 function asodomi_fecha(string $ymd, string $lang): string
 {

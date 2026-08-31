@@ -97,7 +97,7 @@ case 'inicio': ?>
                     <article class="card event-card">
                         <time class="event-date"><?= e(asodomi_fecha($ev['data'], $lang)) ?></time>
                         <h3><?= e($ev['titolo']) ?></h3>
-                        <p><?= e($ev['descrizione'] ?? '') ?></p>
+                        <p><?= asodomi_linkify($ev['descrizione'] ?? '') ?></p>
                         <?php if (!empty($ev['luogo']) && $ev['luogo'] !== null): ?><p class="muted">📍 <?= e($ev['luogo']) ?></p><?php endif; ?>
                         <p class="muted"><?= e(asodomi_modalita_icona($ev['modalita'])) ?> <?= e(asodomi_modalita($ev['modalita'])) ?></p>
                     </article>
@@ -190,7 +190,7 @@ case 'eventos': ?>
                                 <?php elseif (!empty($ev['video_url']) && is_string($ev['video_url']) && ($video_ev = video_embed($ev['video_url']))): ?>
                                     <div class="video-box"><iframe src="<?= e($video_ev['embed']) ?>" title="<?= e($ev['titolo']) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
                                 <?php endif; ?>
-                                <p><?= e($ev['descrizione'] ?? '') ?></p>
+                                <p><?= asodomi_linkify($ev['descrizione'] ?? '') ?></p>
                                 <?php if (!empty($ev['luogo']) && $ev['luogo'] !== null): ?><p class="muted">📍 <?= e($ev['luogo']) ?></p><?php endif; ?>
                                 <p class="muted"><?= e(asodomi_modalita_icona($ev['modalita'])) ?> <?= e(asodomi_modalita($ev['modalita'])) ?></p>
                                 <a class="btn btn-primary" href="<?= e(url($lang, 'cita')) ?>"><?= e($t['eventos']['participate']) ?></a>
@@ -217,7 +217,7 @@ case 'eventos': ?>
                             <?php if (!empty($nt['video_url']) && is_string($nt['video_url']) && ($video_nt = video_embed($nt['video_url']))): ?>
                                 <div class="video-box"><iframe src="<?= e($video_nt['embed']) ?>" title="<?= e($nt['titolo']) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
                             <?php endif; ?>
-                            <p><?= e($nt['testo'] ?? '') ?></p>
+                            <p><?= asodomi_linkify($nt['testo'] ?? '') ?></p>
                             <?php if (!empty($nt['fonte_url']) && is_string($nt['fonte_url'])): ?>
                                 <p><a class="back-link" href="<?= e($nt['fonte_url']) ?>" target="_blank" rel="noopener"><?= e($t['eventos']['fonte']) ?> ↗</a></p>
                             <?php endif; ?>
@@ -282,7 +282,7 @@ case 'blog':
             <?php endif; ?>
 
             <article class="article-body">
-                <?= sanitizza_html((string)$art['contenuto']) ?>
+                <?= asodomi_linkify(sanitizza_html((string)$art['contenuto'])) ?>
             </article>
 
             <p class="center" style="margin-top:2.5rem">
