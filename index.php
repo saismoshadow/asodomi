@@ -95,9 +95,11 @@ case 'inicio': ?>
             <div class="cards">
                 <?php foreach ($eventos as $ev): ?>
                     <article class="card event-card">
-                        <time class="event-date"><?= e(asodomi_fecha($ev['fecha'], $lang)) ?></time>
-                        <h3><?= e($ev['titulo'][$lang] ?? $ev['titulo']['es']) ?></h3>
-                        <p><?= e($ev['descripcion'][$lang] ?? $ev['descripcion']['es']) ?></p>
+                        <time class="event-date"><?= e(asodomi_fecha($ev['data'], $lang)) ?></time>
+                        <h3><?= e($ev['titolo']) ?></h3>
+                        <p><?= e($ev['descrizione'] ?? '') ?></p>
+                        <?php if (!empty($ev['luogo']) && $ev['luogo'] !== null): ?><p class="muted">📍 <?= e($ev['luogo']) ?></p><?php endif; ?>
+                        <p class="muted"><?= e(asodomi_modalita_icona($ev['modalita'])) ?> <?= e(asodomi_modalita($ev['modalita'])) ?></p>
                     </article>
                 <?php endforeach; ?>
             </div>
@@ -151,34 +153,80 @@ case 'servicios': ?>
 <?php break;
 
 case 'eventos': ?>
+    <?php
+    $gtab = (isset($_GET['tab']) && $_GET['tab'] === 'notizie') ? 'notizie' : 'eventi';
+    $sezione_eventi  = ($gtab === 'eventi');
+    $sezione_notizie = ($gtab === 'notizie');
+    ?>
 
     <section class="page-head">
         <div class="container">
             <h1><?= e($t['eventos']['title']) ?></h1>
             <p class="lead"><?= e($t['eventos']['text']) ?></p>
+            <p class="area-tabs">
+                <a class="<?= $sezione_eventi ? 'active' : '' ?>" href="<?= e(url($lang, 'eventos')) ?>"><?= e($t['eventos']['tab_eventi']) ?></a>
+                <a class="<?= $sezione_notizie ? 'active' : '' ?>" href="<?= e(url($lang, 'eventos') . '?tab=notizie') ?>"><?= e($t['eventos']['tab_notizie']) ?></a>
+            </p>
         </div>
     </section>
 
-    <section class="section">
-        <div class="container">
-            <?php $eventos = asodomi_eventos(); ?>
-            <?php if (!$eventos): ?>
-                <p class="empty-state"><?= e($t['eventos']['empty']) ?></p>
-            <?php else: ?>
-                <div class="cards">
-                    <?php foreach ($eventos as $ev): ?>
-                        <article class="card event-card">
-                            <time class="event-date"><?= e(asodomi_fecha($ev['fecha'], $lang)) ?></time>
-                            <h3><?= e($ev['titulo'][$lang] ?? $ev['titulo']['es']) ?></h3>
-                            <p><?= e($ev['descripcion'][$lang] ?? $ev['descripcion']['es']) ?></p>
-                            <?php if (!empty($ev['lugar'])): ?><p class="muted">📍 <?= e($ev['lugar']) ?></p><?php endif; ?>
-                            <a class="btn btn-primary" href="<?= e(url($lang, 'cita')) ?>"><?= e($t['eventos']['participate']) ?></a>
+    <?php if ($sezione_eventi): ?>
+        <section class="section">
+            <div class="container">
+                <?php $eventos = asodomi_eventos(); ?>
+                <?php if (!$eventos): ?>
+                    <p class="empty-state"><?= e($t['eventos']['empty_eventi']) ?></p>
+                <?php else: ?>
+                    <div class="cards">
+                        <?php foreach ($eventos as $ev): ?>
+                            <article class="card event-card">
+                                <time class="event-date"><?= e(asodomi_fecha($ev['data'], $lang)) ?></time>
+                                <h3><?= e($ev['titolo']) ?></h3>
+                                <?php if (!empty($ev['immagine']) && is_string($ev['immagine'])): ?>
+                                    <img src="<?= e(asodomi_media_url($ev['immagine'])) ?>" alt="<?= e($ev['titolo']) ?>" style="max-width:100%;border-radius:10px;margin:.4rem 0">
+                                <?php endif; ?>
+                                <?php if (!empty($ev['videofile']) && is_string($ev['videofile']) && strpos($ev['videofile'], '.') !== false): ?>
+                                    <video controls style="width:100%;border-radius:10px;margin:.4rem 0"><source src="<?= e(asodomi_media_url($ev['videofile'])) ?>"></video>
+                                <?php elseif (!empty($ev['video_url']) && is_string($ev['video_url']) && ($video_ev = video_embed($ev['video_url']))): ?>
+                                    <div class="video-box"><iframe src="<?= e($video_ev['embed']) ?>" title="<?= e($ev['titolo']) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+                                <?php endif; ?>
+                                <p><?= e($ev['descrizione'] ?? '') ?></p>
+                                <?php if (!empty($ev['luogo']) && $ev['luogo'] !== null): ?><p class="muted">📍 <?= e($ev['luogo']) ?></p><?php endif; ?>
+                                <p class="muted"><?= e(asodomi_modalita_icona($ev['modalita'])) ?> <?= e(asodomi_modalita($ev['modalita'])) ?></p>
+                                <a class="btn btn-primary" href="<?= e(url($lang, 'cita')) ?>"><?= e($t['eventos']['participate']) ?></a>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
+    <?php else: ?>
+        <section class="section">
+            <div class="container">
+                <?php $notizie = asodomi_notizie(); ?>
+                <?php if (!$notizie): ?>
+                    <p class="empty-state"><?= e($t['eventos']['empty_notizie']) ?></p>
+                <?php else: ?>
+                    <?php foreach ($notizie as $nt): ?>
+                        <article class="card" style="margin-bottom:1.2rem">
+                            <h3><?= e($nt['titolo']) ?></h3>
+                            <time class="muted"><?= e(asodomi_fecha(($nt['aggiornato_il'] ?? $nt['creato_il']), $lang)) ?></time>
+                            <?php if (!empty($nt['immagine']) && is_string($nt['immagine'])): ?>
+                                <img src="<?= e(asodomi_media_url($nt['immagine'])) ?>" alt="<?= e($nt['titolo']) ?>" style="max-width:100%;border-radius:10px;margin:.4rem 0">
+                            <?php endif; ?>
+                            <?php if (!empty($nt['video_url']) && is_string($nt['video_url']) && ($video_nt = video_embed($nt['video_url']))): ?>
+                                <div class="video-box"><iframe src="<?= e($video_nt['embed']) ?>" title="<?= e($nt['titolo']) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
+                            <?php endif; ?>
+                            <p><?= e($nt['testo'] ?? '') ?></p>
+                            <?php if (!empty($nt['fonte_url']) && is_string($nt['fonte_url'])): ?>
+                                <p><a class="back-link" href="<?= e($nt['fonte_url']) ?>" target="_blank" rel="noopener"><?= e($t['eventos']['fonte']) ?> ↗</a></p>
+                            <?php endif; ?>
                         </article>
                     <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
-        </div>
-    </section>
+                <?php endif; ?>
+            </div>
+        </section>
+    <?php endif; ?>
 
 <?php break;
 

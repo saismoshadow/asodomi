@@ -84,21 +84,60 @@ function asodomi_route(): array
     return [$lang, $page];
 }
 
-/** Devuelve los eventos futuros (y los últimos pasados) desde content/eventos.php */
+/** Eventi prossimi (pubblicati, non in archivio, con data >= oggi) dalla tabella `eventi` */
 function asodomi_eventos(int $limit = 0): array
 {
-    static $eventos = null;
-    if ($eventos === null) {
-        $file = dirname(__DIR__) . '/content/eventos.php';
-        $eventos = is_file($file) ? require $file : [];
-        usort($eventos, fn($a, $b) => strcmp($a['fecha'], $b['fecha']));
-    }
-    $hoy = date('Y-m-d');
-    $futuros = array_values(array_filter($eventos, fn($ev) => $ev['fecha'] >= $hoy));
+    $sql = 'SELECT * FROM eventi
+            WHERE stato = "pubblicato" AND archiviato = 0 AND data >= CURDATE()
+            ORDER BY data ASC';
     if ($limit > 0) {
-        $futuros = array_slice($futuros, 0, $limit);
+        $sql .= ' LIMIT ' . (int)$limit;
     }
-    return $futuros;
+    return db()->query($sql)->fetchAll();
+}
+
+/** Notizie pubblicate (stato = pubblicato) dalla tabella `notizie` */
+function asodomi_notizie(int $limit = 0): array
+{
+    $sql = 'SELECT * FROM notizie
+            WHERE stato = "pubblicato"
+            ORDER BY COALESCE(aggiornato_il, creato_il) DESC';
+    if ($limit > 0) {
+        $sql .= ' LIMIT ' . (int)$limit;
+    }
+    return db()->query($sql)->fetchAll();
+}
+
+/** Percorso relativo di un file media in /uploads (sanificado) */
+function asodomi_media_url(?string $nome_file): string
+{
+    $nome_file = trim((string)$nome_file);
+    if ($nome_file === '') {
+        return '';
+    }
+    return asset('/uploads/' . basename((string)$nome_file));
+}
+
+/** Etichetta leggibile della modalità di un evento */
+function asodomi_modalita(string $modalita): string
+{
+    $map = [
+        'presenza' => 'In presenza',
+        'online'   => 'Online',
+        'mista'    => 'Mista (online e in presenza)',
+    ];
+    return $map[$modalita] ?? 'In presenza';
+}
+
+/** Icona/emoji per la modalità di un evento */
+function asodomi_modalita_icona(string $modalita): string
+{
+    $map = [
+        'presenza' => '📍',
+        'online'   => '💻',
+        'mista'    => '🔄',
+    ];
+    return $map[$modalita] ?? '📍';
 }
 
 /** Formatea una fecha YYYY-MM-DD según el idioma */

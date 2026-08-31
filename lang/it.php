@@ -166,7 +166,11 @@ return [
     'eventos' => [
         'title' => 'Eventi e notizie',
         'text'  => 'Scopri le nostre prossime attività e le ultime novità dell’associazione.',
-        'empty' => 'Presto pubblicheremo nuovi eventi. Seguici sui social per non perderti nulla!',
+        'tab_eventi'   => 'Eventi',
+        'tab_notizie'  => 'Notizie',
+        'empty_eventi'   => 'Presto pubblicheremo nuovi eventi. Seguici sui social per non perderti nulla!',
+        'empty_notizie'  => 'Nessuna notizia pubblicata per il momento. Torna presto!',
+        'fonte'        => 'Fonte',
         'participate' => 'Voglio partecipare',
     ],
 

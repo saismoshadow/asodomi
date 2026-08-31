@@ -166,7 +166,11 @@ return [
     'eventos' => [
         'title' => 'Événements et actualités',
         'text'  => 'Découvrez nos prochaines activités et les dernières nouvelles de l’association.',
-        'empty' => 'Nous publierons bientôt de nouveaux événements. Suivez-nous sur les réseaux sociaux pour ne rien manquer !',
+        'tab_eventi'   => 'Événements',
+        'tab_notizie'  => 'Actualités',
+        'empty_eventi'   => 'Nous publierons bientôt de nouveaux événements. Suivez-nous sur les réseaux sociaux pour ne rien manquer !',
+        'empty_notizie'  => 'Aucune actualité publiée pour le moment. Revenez bientôt !',
+        'fonte'        => 'Source',
         'participate' => 'Je veux participer',
     ],
 

@@ -48,6 +48,8 @@ $solo_admin = [
     'elimina-documento-socio',
     'utenti', 'salva-utente', 'elimina-utente',
 ];
+// Articoli, notizie ed eventi sono gestibili sia da admin che da redattore
+// (le rotte eventi/notizie NON sono in $solo_admin)
 if ($utente['ruolo'] !== 'admin' && in_array($route, $solo_admin, true)) {
     http_response_code(403);
     exit('Operazione riservata agli amministratori.');
@@ -56,6 +58,8 @@ if ($utente['ruolo'] !== 'admin' && in_array($route, $solo_admin, true)) {
 $pagine_admin = [
     'dashboard',
     'articoli', 'articolo', 'salva-articolo', 'elimina-articolo',
+    'eventi', 'evento', 'salva-evento', 'elimina-evento', 'stato-evento',
+    'notizie', 'notizia', 'salva-notizia', 'elimina-notizia',
     'documenti', 'salva-documento', 'elimina-documento',
     'soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',
@@ -68,6 +72,8 @@ if (!in_array($route, $pagine_admin, true)) {
 // Azioni POST ed export: girano SENZA layout (fanno redirect o inviano file)
 $senza_layout = [
     'salva-articolo', 'elimina-articolo',
+    'salva-evento', 'elimina-evento', 'stato-evento',
+    'salva-notizia', 'elimina-notizia',
     'salva-documento', 'elimina-documento',
     'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',

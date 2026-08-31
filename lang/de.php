@@ -166,7 +166,11 @@ return [
     'eventos' => [
         'title' => 'Anlässe und Neuigkeiten',
         'text'  => 'Erfahren Sie alles über unsere nächsten Aktivitäten und die aktuellen News des Vereins.',
-        'empty' => 'Bald veröffentlichen wir neue Anlässe. Folgen Sie uns auf Social Media, damit Sie nichts verpassen!',
+        'tab_eventi'   => 'Anlässe',
+        'tab_notizie'  => 'News',
+        'empty_eventi'   => 'Bald veröffentlichen wir neue Anlässe. Folgen Sie uns auf Social Media, damit Sie nichts verpassen!',
+        'empty_notizie'  => 'Zurzeit sind keine News veröffentlicht. Schauen Sie bald wieder vorbei!',
+        'fonte'        => 'Quelle',
         'participate' => 'Ich möchte teilnehmen',
     ],
 

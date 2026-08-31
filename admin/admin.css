@@ -150,3 +150,18 @@
     .tabella { font-size: .85rem; }
     .tabella td, .tabella th { padding: .45rem .35rem; }
 }
+
+/* Linguette di sezione (Blog / Notizie / Eventi) nel pannello admin */
+.admin-tabs {
+    display: flex; flex-wrap: wrap; gap: .25rem;
+    border-bottom: 2px solid var(--azul-oscuro, #1f3a8a);
+    margin-bottom: 1.2rem;
+}
+.admin-tab {
+    padding: .55rem 1.1rem; text-decoration: none; color: var(--texto, #333);
+    background: #eef1f6; border-radius: 10px 10px 0 0; font-weight: 600; font-size: .92rem;
+}
+.admin-tab:hover { background: #dde4ee; }
+.admin-tab.active {
+    background: var(--azul-oscuro, #1f3a8a); color: #fff;
+}

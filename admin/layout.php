@@ -5,14 +5,16 @@
  */
 $nav_admin = [
     'dashboard' => ['📊', 'Bacheca'],
-    'articoli'  => ['📰', 'Articoli blog'],
+    'articoli'  => ['📰', 'Contenuti'],
     'documenti' => ['📁', 'Documenti soci'],
     'soci'      => ['👥', 'Soci'],
     'utenti'    => ['🔑', 'Utenti'],
 ];
 $gruppo_attivo = [
     'dashboard' => ['dashboard'],
-    'articoli'  => ['articoli', 'articolo', 'salva-articolo', 'elimina-articolo'],
+    'articoli'  => ['articoli', 'articolo', 'salva-articolo', 'elimina-articolo',
+                    'eventi', 'evento', 'salva-evento', 'elimina-evento', 'stato-evento',
+                    'notizie', 'notizia', 'salva-notizia', 'elimina-notizia'],
     'documenti' => ['documenti', 'salva-documento', 'elimina-documento'],
     'soci'      => ['soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export'],
     'utenti'    => ['utenti', 'salva-utente', 'elimina-utente'],
