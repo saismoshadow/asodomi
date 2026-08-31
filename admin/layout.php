@@ -6,6 +6,7 @@
 $nav_admin = [
     'dashboard' => ['📊', 'Bacheca'],
     'articoli'  => ['📰', 'Contenuti'],
+    'newsletter' => ['📧', 'Newsletter'],
     'documenti' => ['📁', 'Documenti soci'],
     'soci'      => ['👥', 'Soci'],
     'utenti'    => ['🔑', 'Utenti'],
@@ -13,6 +14,7 @@ $nav_admin = [
 $gruppo_attivo = [
     'dashboard' => ['dashboard'],
     'articoli'  => ['articoli', 'articolo', 'salva-articolo', 'elimina-articolo',
+                    'newsletter', 'newsletter_campagna', 'salva-newsletter', 'elimina-newsletter', 'newsletter_invia', 'iscritti', 'toggle-iscritto',
                     'eventi', 'evento', 'salva-evento', 'elimina-evento', 'stato-evento',
                     'notizie', 'notizia', 'salva-notizia', 'elimina-notizia'],
     'documenti' => ['documenti', 'salva-documento', 'elimina-documento'],

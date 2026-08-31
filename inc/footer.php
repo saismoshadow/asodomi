@@ -31,6 +31,15 @@ require_once __DIR__ . '/functions.php';
             </ul>
         </div>
     </div>
+    <div class="container footer-newsletter">
+        <h3><?= e($t['newsletter']['iscriviti'] ?? 'Iscriviti alla newsletter') ?></h3>
+        <form method="post" action="<?= e(url($lang, 'newsletter_subscribe')) ?>" class="newsletter-form">
+            <?= csrf_campo() ?>
+            <input type="email" name="email" placeholder="<?= e($t['newsletter']['email_placeholder'] ?? 'La tua email') ?>" required>
+            <input type="text" name="nome" placeholder="<?= e($t['newsletter']['nome_placeholder'] ?? 'Il tuo nome (opzionale)') ?>">
+            <button type="submit" class="btn btn-primary"><?= e($t['newsletter']['iscriviti_btn'] ?? 'Iscriviti') ?></button>
+        </form>
+    </div>
     <div class="container footer-bottom">
         <p>© <?= date('Y') ?> ASODOMI – <?= e(SITE_FULL_NAME) ?>. <?= e($t['footer']['rights']) ?></p>
         <p>
