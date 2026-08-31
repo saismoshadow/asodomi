@@ -6,6 +6,12 @@
 
 require_once __DIR__ . '/inc/functions.php';
 
+// Buffer de salida: garantiza que los header('Location') funcionen incluso
+// si alguna extensión/aviso emitiera contenido antes de redirigir.
+if (!ob_get_level()) {
+    ob_start();
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: ' . url(DEFAULT_LANG, 'inicio'));
     exit;
@@ -52,24 +58,71 @@ if ($tipo === 'socio') {
         header("Location: $volver?err=1");
         exit;
     }
+
     require_once __DIR__ . '/inc/db.php';
-    $password = (string)($_POST['password'] ?? '');
+
+    $nome      = limpiar('nombre', 160);
+    $email     = strtolower(limpiar('email', 160));
+    $indirizzo = limpiar('indirizzo', 200);
+    $comune    = limpiar('comune', 120);
+
+    $modifica  = (int)($_POST['socio_id'] ?? 0);
+    $password  = (string)($_POST['password'] ?? '');
+
+    // ── Modalità "modifica dati": UPDATE invece di INSERT ─────────────
+    if ($modifica > 0) {
+        if ($password !== '' && strlen($password) < 8) {
+            header("Location: $volver?modifica=1&id=$modifica&err=1");
+            exit;
+        }
+        try {
+            $stmt = db()->prepare('SELECT id FROM soci WHERE email = ? AND id != ?');
+            $stmt->execute([$email, $modifica]);
+            if ($stmt->fetch()) {
+                header("Location: $volver?modifica=1&id=$modifica&dup=1");
+                exit;
+            }
+            if ($password !== '') {
+                db()->prepare(
+                    'UPDATE soci SET nome = ?, email = ?, telefono = ?, indirizzo = ?, comune = ?, password_hash = ? WHERE id = ?'
+                )->execute([$nome, $email, $telefono, $indirizzo, $comune, password_hash($password, PASSWORD_DEFAULT), $modifica]);
+            } else {
+                db()->prepare(
+                    'UPDATE soci SET nome = ?, email = ?, telefono = ?, indirizzo = ?, comune = ? WHERE id = ?'
+                )->execute([$nome, $email, $telefono, $indirizzo, $comune, $modifica]);
+            }
+            header("Location: $volver?ok=1&id=$modifica");
+            exit;
+        } catch (PDOException $ex) {
+            error_log('ASODOMI socio update: ' . $ex->getMessage());
+            header("Location: $volver?modifica=1&id=$modifica&err=1");
+            exit;
+        }
+    }
+
+    // ── Controllo duplicati: il socio con questa email esiste già ─────
+    try {
+        $stmt = db()->prepare('SELECT id FROM soci WHERE email = ?');
+        $stmt->execute([$email]);
+        if ($stmt->fetch()) {
+            header("Location: $volver?dup=1&email=" . rawurlencode($email));
+            exit;
+        }
+    } catch (PDOException $ex) {
+        error_log('ASODOMI socio dup check: ' . $ex->getMessage());
+    }
+
     if (strlen($password) < 8) {
         header("Location: $volver?err=1");
         exit;
     }
+
     try {
         db()->prepare(
             'INSERT INTO soci (nome, email, telefono, indirizzo, comune, password_hash, stato, consenso_privacy)
              VALUES (?, ?, ?, ?, ?, ?, "attivo", 1)'
-        )->execute([
-            limpiar('nombre', 160),
-            strtolower(limpiar('email', 160)),
-            $telefono,
-            limpiar('indirizzo', 200),
-            limpiar('comune', 120),
-            password_hash($password, PASSWORD_DEFAULT),
-        ]);
+        )->execute([$nome, $email, $telefono, $indirizzo, $comune, password_hash($password, PASSWORD_DEFAULT)]);
+        $socio_id = (int)db()->lastInsertId();
     } catch (PDOException $ex) {
         error_log('ASODOMI socio insert: ' . $ex->getMessage());
         header("Location: $volver?err=1");
@@ -137,5 +190,9 @@ $enviado = @mail(CONTACT_EMAIL, '=?UTF-8?B?' . base64_encode($asunto) . '?=', $c
 // Per l'iscrizione socio il dato è già salvato nel database: va bene anche se l'email di notifica fallisse
 $successo = ($tipo === 'socio') ? true : $enviado;
 
-header('Location: ' . $volver . ($successo ? '?ok=1' : '?err=1'));
+if ($tipo === 'socio') {
+    header('Location: ' . $volver . '?ok=1&id=' . $socio_id);
+} else {
+    header('Location: ' . $volver . ($successo ? '?ok=1' : '?err=1'));
+}
 exit;

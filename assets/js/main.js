@@ -29,6 +29,22 @@
         });
     });
 
+    // Formulario de inscripción: botón habilitado solo si la casilla de
+    // privacidad está marcada (visible pero no clicable antes de consentir).
+    document.querySelectorAll('form.iscrizione-form').forEach(function (form) {
+        var chk = form.querySelector('input[name="consenso"]');
+        var btn = form.querySelector('button[type="submit"]');
+        if (chk && btn) {
+            // En modo modifica la casilla parte marcada: se inicializa igualmente
+            function actualizar() {
+                btn.disabled = !chk.checked;
+                btn.setAttribute('aria-disabled', btn.disabled ? 'true' : 'false');
+            }
+            chk.addEventListener('change', actualizar);
+            actualizar();
+        }
+    });
+
     // ── PWA: service worker + pulsante "Installa app" ─────────────
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {

@@ -81,6 +81,16 @@ return [
         'submit'         => 'Devenir membre maintenant',
         'success'        => 'Bienvenue chez ASODOMI ! Votre adhésion a été enregistrée : nous vous contacterons bientôt.',
         'error'          => "Un problème est survenu lors de l'envoi. Réessayez ou écrivez-nous via WhatsApp.",
+        'conferma_title' => 'Adhésion enregistrée',
+        'i_tuoi_dati'    => 'Vos données',
+        'correggi'       => 'Corriger mes données',
+        'accedi_area'    => 'Accéder à l’espace membres',
+        'modifica_title' => 'Corrigez vos données',
+        'modifica_intro' => 'Modifiez les champs souhaités, puis cliquez sur "Enregistrer". Si vous laissez le mot de passe vide, l’actuel reste inchangé.',
+        'salva_modifiche' => 'Enregistrer les modifications',
+        'password_opzionale' => 'Nouveau mot de passe (laissez vide pour ne pas le changer)',
+        'duplicato'      => 'Un membre est déjà enregistré avec cette adresse e-mail. Si c’est vous, accédez à l’espace membres ou corrigez vos données.',
+        'altri_dati'     => 'Voulez-vous continuer ?',
     ],
 
     'privacy' => [

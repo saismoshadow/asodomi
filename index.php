@@ -421,51 +421,116 @@ case 'contacto': ?>
 
 case 'iscrizione':
     $fi = $t['iscrizione'];
+
+    // ── Stato della pagina: id socio da confermare/modificare ────────
+    $socio_conferma = null;
+    $socio_modifica = 0;
+    $socio_dati     = null;
+
+    if (isset($_GET['ok']) && (int)($_GET['id'] ?? 0) > 0) {
+        $stmt = db()->prepare('SELECT id, nome, email, telefono, indirizzo, comune FROM soci WHERE id = ?');
+        $stmt->execute([(int)$_GET['id']]);
+        $socio_conferma = $stmt->fetch() ?: null;
+    }
+
+    $socio_modifica = (int)($_GET['modifica'] ?? 0);
+    if ($socio_modifica > 0) {
+        $stmt = db()->prepare('SELECT id, nome, email, telefono, indirizzo, comune FROM soci WHERE id = ?');
+        $stmt->execute([$socio_modifica]);
+        $socio_dati = $stmt->fetch() ?: null;
+        if (!$socio_dati) {
+            $socio_modifica = 0;
+        }
+    }
+
+    $dup_email = isset($_GET['dup']) ? trim((string)($_GET['email'] ?? '')) : '';
+    $dup_mod   = isset($_GET['dup']) && $socio_modifica > 0;
 ?>
 
     <section class="page-head">
         <div class="container">
-            <h1><?= e($fi['title']) ?></h1>
-            <p class="lead"><?= e($fi['text']) ?></p>
+            <h1><?= e($socio_conferma ? $fi['conferma_title'] : ($socio_modifica ? $fi['modifica_title'] : $fi['title'])) ?></h1>
+            <p class="lead"><?= e($socio_modifica ? $fi['modifica_intro'] : $fi['text']) ?></p>
         </div>
     </section>
 
     <section class="section">
         <div class="container narrow">
-            <?php if ($form_ok): ?><div class="alert alert-ok" role="status">✅ <?= e($fi['success']) ?></div><?php endif; ?>
-            <?php if ($form_err): ?><div class="alert alert-err" role="alert">⚠️ <?= e($fi['error']) ?></div><?php endif; ?>
 
-            <form class="form" method="post" action="<?= e(asset('/enviar.php')) ?>">
-                <input type="hidden" name="form_type" value="socio">
-                <input type="hidden" name="lang" value="<?= e($lang) ?>">
-                <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <?php if ($socio_conferma): ?>
 
-                <label><?= e($fi['form_nome']) ?>
-                    <input type="text" name="nombre" required maxlength="160">
-                </label>
-                <label><?= e($fi['form_email']) ?>
-                    <input type="email" name="email" required maxlength="160">
-                </label>
-                <label><?= e($fi['form_telefono']) ?>
-                    <input type="tel" name="telefono" required maxlength="40">
-                </label>
-                <label><?= e($fi['form_indirizzo']) ?>
-                    <input type="text" name="indirizzo" maxlength="200">
-                </label>
-                <label><?= e($fi['form_comune']) ?>
-                    <input type="text" name="comune" required maxlength="120">
-                </label>
-                <label><?= e($fi['form_password']) ?>
-                    <input type="password" name="password" required minlength="8" autocomplete="new-password">
-                </label>
+                <div class="alert alert-ok" role="status">✅ <?= e($fi['success']) ?></div>
 
-                <label class="check-label">
-                    <input type="checkbox" name="consenso" value="1" required>
-                    <span><?= e($fi['form_consenso']) ?> <a href="<?= e(url($lang, 'privacy')) ?>" target="_blank">↗</a></span>
-                </label>
+                <div class="card" style="padding:1.5rem;border-radius:14px;border:1px solid var(--bordo,rgba(0,0,0,.08));background:#fff">
+                    <h3>📋 <?= e($fi['i_tuoi_dati']) ?></h3>
+                    <table class="socio-riepilogo" style="width:100%;border-collapse:collapse;margin:1rem 0">
+                        <tr><th style="text-align:left;padding:.5rem 0;color:var(--azul)"><?= e($fi['form_nome']) ?></th><td style="padding:.5rem 0"><?= e($socio_conferma['nome']) ?></td></tr>
+                        <tr><th style="text-align:left;padding:.5rem 0;color:var(--azul)"><?= e($fi['form_email']) ?></th><td style="padding:.5rem 0"><?= e($socio_conferma['email']) ?></td></tr>
+                        <tr><th style="text-align:left;padding:.5rem 0;color:var(--azul)"><?= e($fi['form_telefono']) ?></th><td style="padding:.5rem 0"><?= e($socio_conferma['telefono']) ?></td></tr>
+                        <?php if ($socio_conferma['indirizzo'] !== ''): ?>
+                        <tr><th style="text-align:left;padding:.5rem 0;color:var(--azul)"><?= e($fi['form_indirizzo']) ?></th><td style="padding:.5rem 0"><?= e($socio_conferma['indirizzo']) ?></td></tr>
+                        <?php endif; ?>
+                        <?php if ($socio_conferma['comune'] !== ''): ?>
+                        <tr><th style="text-align:left;padding:.5rem 0;color:var(--azul)"><?= e($fi['form_comune']) ?></th><td style="padding:.5rem 0"><?= e($socio_conferma['comune']) ?></td></tr>
+                        <?php endif; ?>
+                    </table>
+                    <p class="muted small"><?= e($fi['altri_dati']) ?></p>
+                    <div style="display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem">
+                        <a class="btn btn-primary" href="<?= e(url($lang, 'area-soci')) ?>">🔒 <?= e($fi['accedi_area']) ?></a>
+                        <a class="btn btn-ghost" href="<?= e(url($lang, 'iscrizione') . '?modifica=1&id=' . $socio_conferma['id']) ?>">✏️ <?= e($fi['correggi']) ?></a>
+                    </div>
+                </div>
 
-                <button type="submit" class="btn btn-primary btn-block" data-sending="<?= e($t['forms']['sending']) ?>"><?= e($fi['submit']) ?></button>
-            </form>
+            <?php else: ?>
+
+                <?php if ($dup_email): ?>
+                    <div class="alert alert-err" role="alert">⚠️ <?= e($fi['duplicato']) ?></div>
+                <?php endif; ?>
+                <?php if ($form_err || (isset($_GET['err']) && $socio_modifica)): ?>
+                    <div class="alert alert-err" role="alert">⚠️ <?= e($fi['error']) ?></div>
+                <?php endif; ?>
+
+                <form class="form iscrizione-form" method="post" action="<?= e(asset('/enviar.php')) ?>">
+                    <input type="hidden" name="form_type" value="socio">
+                    <input type="hidden" name="lang" value="<?= e($lang) ?>">
+                    <?php if ($socio_modifica): ?>
+                        <input type="hidden" name="socio_id" value="<?= e($socio_modifica) ?>">
+                    <?php endif; ?>
+                    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                    <label><?= e($fi['form_nome']) ?>
+                        <input type="text" name="nombre" required maxlength="160" value="<?= e($socio_dati['nome'] ?? '') ?>">
+                    </label>
+                    <label><?= e($fi['form_email']) ?>
+                        <input type="email" name="email" required maxlength="160" value="<?= e($socio_dati['email'] ?? '') ?>">
+                    </label>
+                    <label><?= e($fi['form_telefono']) ?>
+                        <input type="tel" name="telefono" required maxlength="40" value="<?= e($socio_dati['telefono'] ?? '') ?>">
+                    </label>
+                    <label><?= e($fi['form_indirizzo']) ?>
+                        <input type="text" name="indirizzo" maxlength="200" value="<?= e($socio_dati['indirizzo'] ?? '') ?>">
+                    </label>
+                    <label><?= e($fi['form_comune']) ?>
+                        <input type="text" name="comune" required maxlength="120" value="<?= e($socio_dati['comune'] ?? '') ?>">
+                    </label>
+                    <label><?= e($socio_modifica ? $fi['password_opzionale'] : $fi['form_password']) ?>
+                        <input type="password" name="password" <?= $socio_modifica ? '' : 'required minlength="8"' ?> autocomplete="new-password">
+                    </label>
+
+                    <label class="check-label">
+                        <input type="checkbox" name="consenso" value="1" <?= $socio_modifica ? 'checked' : 'required' ?>>
+                        <span><?= e($fi['form_consenso']) ?> <a href="<?= e(url($lang, 'privacy')) ?>" target="_blank">↗</a></span>
+                    </label>
+
+                    <?php if (!$socio_modifica): ?>
+                        <p class="muted small" style="margin-top:.4rem">*</p>
+                    <?php endif; ?>
+
+                    <button type="submit" class="btn btn-primary btn-block js-privacy-submit" data-sending="<?= e($t['forms']['sending']) ?>"><?= e($socio_modifica ? $fi['salva_modifiche'] : $fi['submit']) ?></button>
+                </form>
+
+            <?php endif; ?>
+
         </div>
     </section>
 

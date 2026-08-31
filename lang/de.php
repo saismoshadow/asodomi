@@ -81,6 +81,16 @@ return [
         'submit'         => 'Jetzt Mitglied werden',
         'success'        => 'Willkommen bei ASODOMI! Ihre Mitgliedschaft wurde erfasst: Wir melden uns bald bei Ihnen.',
         'error'          => 'Beim Senden ist ein Problem aufgetreten. Versuchen Sie es erneut oder schreiben Sie uns per WhatsApp.',
+        'conferma_title' => 'Mitgliedschaft erfasst',
+        'i_tuoi_dati'    => 'Ihre Daten',
+        'correggi'       => 'Meine Daten korrigieren',
+        'accedi_area'    => 'Zum Mitgliederbereich',
+        'modifica_title' => 'Korrigieren Sie Ihre Daten',
+        'modifica_intro' => 'Bearbeiten Sie die gewünschten Felder und klicken Sie auf "Änderungen speichern". Wenn Sie das Passwort leer lassen, bleibt das aktuelle bestehen.',
+        'salva_modifiche' => 'Änderungen speichern',
+        'password_opzionale' => 'Neues Passwort (leer lassen, um es nicht zu ändern)',
+        'duplicato'      => 'Es ist bereits ein Mitglied mit dieser E-Mail registriert. Wenn Sie das sind, melden Sie sich im Mitgliederbereich an oder korrigieren Sie Ihre Daten.',
+        'altri_dati'     => 'Möchten Sie fortfahren?',
     ],
 
     'privacy' => [

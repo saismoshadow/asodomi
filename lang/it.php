@@ -81,6 +81,16 @@ return [
         'submit'         => 'Iscrivimi ora',
         'success'        => 'Benvenuto in ASODOMI! La tua iscrizione è stata registrata: ti contatteremo presto.',
         'error'          => 'Si è verificato un problema con l’invio. Riprova o scrivici su WhatsApp.',
+        'conferma_title' => 'Iscrizione completata',
+        'i_tuoi_dati'    => 'I tuoi dati',
+        'correggi'       => 'Correggi i dati',
+        'accedi_area'    => 'Accedi all’area soci',
+        'modifica_title' => 'Correggi i tuoi dati',
+        'modifica_intro' => 'Modifica i campi che desideri, poi premi "Salva modifiche". Se lasci la password vuota, quella attuale resta invariata.',
+        'salva_modifiche' => 'Salva modifiche',
+        'password_opzionale' => 'Nuova password (lascia vuota per non cambiarla)',
+        'duplicato'      => 'Esiste già un socio registrato con questa email. Se sei tu, accedi all’area soci oppure correggi i dati.',
+        'altri_dati'     => 'Vuoi continuare?',
     ],
 
     'privacy' => [
