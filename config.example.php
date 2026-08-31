@@ -29,7 +29,7 @@ define('CONTACT_EMAIL', 'info@asodomi.com');        // Email donde llegan las so
 define('CONTACT_PHONE', '+41 779 643 401');
 define('CONTACT_WHATSAPP', '+41779643401');         // Solo números, sin espacios
 define('CONTACT_ADDRESS', 'Via Scazziga 8, 6600 Muralto, Svizzera');
-define('FACEBOOK_URL', 'https://facebook.com/asodomi');
+define('FACEBOOK_URL', 'https://www.facebook.com/asodomich/');
 define('INSTAGRAM_URL', 'https://instagram.com/asodomi');
 
 // Asunto de los emails que envían los formularios
