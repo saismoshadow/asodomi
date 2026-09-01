@@ -1,5 +1,6 @@
 <?php
 /**
+ini_set('display_errors', '1'); error_reporting(E_ALL);
  * ASODOMI – Pannello di amministrazione (in italiano).
  * Accesso: /admin  (le pagine interne usano ?route=...)
  */
