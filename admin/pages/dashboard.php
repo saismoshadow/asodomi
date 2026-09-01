@@ -1,5 +1,7 @@
 <?php
 /** Bacheca: riepilogo rapido */
+require_once __DIR__ . '/../../inc/functions.php';
+
 $conteggi = [
     'articoli_pub'  => (int)db()->query('SELECT COUNT(*) FROM articoli WHERE stato = "pubblicato"')->fetchColumn(),
     'articoli_bozze'=> (int)db()->query('SELECT COUNT(*) FROM articoli WHERE stato = "bozza"')->fetchColumn(),
