@@ -55,49 +55,6 @@ function url(string $lang, string $page = ''): string
     return base_url() . '/' . $lang . ($page !== '' ? '/' . $page : '');
 }
 
-/**
- * Devuelve la URL base absoluta del sitio (sin barra final).
- * Permite fijarla con SITE_URL en config para producción; si no, la deduce del host.
- */
-function asodomi_site_url(): string
-{
-    if (defined('SITE_URL') && SITE_URL !== '') {
-        return rtrim(SITE_URL, '/');
-    }
-    $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-        || (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https');
-    $scheme = $https ? 'https' : 'http';
-    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-    return $scheme . '://' . $host . rtrim(base_url(), '/');
-}
-
-/**
- * URL absoluta canónica de una página/lang.
- * Para la home it (idioma de defecto) devuelve la raíz "/"; para las demás usa el prefijo.
- */
-function asodomi_url_canonica(string $lang, string $page): string
-{
-    $pagina = ($page === 'inicio') ? '' : $page;
-    // La home del idioma principal queda en la raíz sin prefijo
-    if ($lang === DEFAULT_LANG && $pagina === '') {
-        return asodomi_site_url() . '/';
-    }
-    return asodomi_site_url() . '/' . $lang . ($pagina !== '' ? '/' . $pagina : '');
-}
-
-/**
- * Title/meta description optimizados por página y por idioma.
- * Devuelve [title, description]; vuelve a un valor por defecto si no existen entradas.
- */
-function asodomi_meta_pagina(array $t, string $page): array
-{
-    $pagina = isset($t['meta']['pages'][$page]) ? $page : 'inicio';
-    $p = $t['meta']['pages'][$pagina] ?? [];
-    $title = $p['title'] ?? ($t['meta']['title_site'] . ($page === 'inicio' ? '' : ' – ' . ($t['nav'][$page] ?? '')));
-    $desc  = $p['description'] ?? $t['meta']['description'];
-    return [trim($title), trim($desc)];
-}
-
 /** Ruta a un recurso estático: asset('/enviar.php') */
 function asset(string $path): string
 {
@@ -181,63 +138,6 @@ function asodomi_modalita_icona(string $modalita): string
         'mista'    => '🔄',
     ];
     return $map[$modalita] ?? '📍';
-}
-
-/**
- * Convierte URL nudos (http/https) que no estén ya dentro de un <a ...>...</a>
- * en enlaces clicables con target="_blank" rel="noopener noreferrer".
- * Escapa el texto de entrada (una sola vez) y deja intactas las etiquetas HTML
- * y los enlaces ya existentes. Usar sobre contenido/HTML en crudo (no escapado).
- */
-function asodomi_linkify(?string $html): string
-{
-    $html = (string)$html;
-    if ($html === '') {
-        return $html;
-    }
-    $out = '';
-    // Divide el HTML en etiquetas <...> y texto plano
-    $partes = preg_split('~(<[^>]+>)~', $html, -1, PREG_SPLIT_DELIM_CAPTURE);
-    $dentro_a = false;
-    foreach ($partes as $parte) {
-        if ($parte === '') {
-            continue;
-        }
-        if (preg_match('~^<[^>]+>$~', $parte)) {
-            // Es una etiqueta: se deja tal cual
-            $out .= $parte;
-            if (preg_match('~^<a\b~i', $parte)) {
-                $dentro_a = true;
-            } elseif (preg_match('~^</a~i', $parte)) {
-                $dentro_a = false;
-            }
-            continue;
-        }
-        // Texto plano: escapar y convertir URLs nudos (solo si no estamos dentro de <a>)
-        if ($dentro_a) {
-            $out .= htmlspecialchars($parte, ENT_QUOTES, 'UTF-8');
-            continue;
-        }
-        // Dividimos el texto por URLs: escapamos lo que no es URL y creamos el link en la URL
-        $trozos = preg_split(
-            '~((?:https?://)[^\s<>\'\"\[\]]+[^\s<>\'\".),:;!?\[\]])~i',
-            $parte,
-            -1,
-            PREG_SPLIT_DELIM_CAPTURE
-        );
-        foreach ($trozos as $trozo) {
-            if ($trozo === '') {
-                continue;
-            }
-            if (preg_match('~^https?://~i', $trozo)) {
-                $esc = htmlspecialchars($trozo, ENT_QUOTES, 'UTF-8');
-                $out .= '<a href="' . $esc . '" target="_blank" rel="noopener noreferrer">' . $esc . '</a>';
-            } else {
-                $out .= htmlspecialchars($trozo, ENT_QUOTES, 'UTF-8');
-            }
-        }
-    }
-    return $out;
 }
 
 /** Formatea una fecha YYYY-MM-DD según el idioma */

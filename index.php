@@ -97,7 +97,7 @@ case 'inicio': ?>
                     <article class="card event-card">
                         <time class="event-date"><?= e(asodomi_fecha($ev['data'], $lang)) ?></time>
                         <h3><?= e($ev['titolo']) ?></h3>
-                        <p><?= asodomi_linkify($ev['descrizione'] ?? '') ?></p>
+                        <p><?= e($ev['descrizione'] ?? '') ?></p>
                         <?php if (!empty($ev['luogo']) && $ev['luogo'] !== null): ?><p class="muted">📍 <?= e($ev['luogo']) ?></p><?php endif; ?>
                         <p class="muted"><?= e(asodomi_modalita_icona($ev['modalita'])) ?> <?= e(asodomi_modalita($ev['modalita'])) ?></p>
                     </article>
@@ -190,7 +190,7 @@ case 'eventos': ?>
                                 <?php elseif (!empty($ev['video_url']) && is_string($ev['video_url']) && ($video_ev = video_embed($ev['video_url']))): ?>
                                     <div class="video-box"><iframe src="<?= e($video_ev['embed']) ?>" title="<?= e($ev['titolo']) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
                                 <?php endif; ?>
-                                <p><?= asodomi_linkify($ev['descrizione'] ?? '') ?></p>
+                                <p><?= e($ev['descrizione'] ?? '') ?></p>
                                 <?php if (!empty($ev['luogo']) && $ev['luogo'] !== null): ?><p class="muted">📍 <?= e($ev['luogo']) ?></p><?php endif; ?>
                                 <p class="muted"><?= e(asodomi_modalita_icona($ev['modalita'])) ?> <?= e(asodomi_modalita($ev['modalita'])) ?></p>
                                 <a class="btn btn-primary" href="<?= e(url($lang, 'cita')) ?>"><?= e($t['eventos']['participate']) ?></a>
@@ -217,7 +217,7 @@ case 'eventos': ?>
                             <?php if (!empty($nt['video_url']) && is_string($nt['video_url']) && ($video_nt = video_embed($nt['video_url']))): ?>
                                 <div class="video-box"><iframe src="<?= e($video_nt['embed']) ?>" title="<?= e($nt['titolo']) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>
                             <?php endif; ?>
-                            <p><?= asodomi_linkify($nt['testo'] ?? '') ?></p>
+                            <p><?= e($nt['testo'] ?? '') ?></p>
                             <?php if (!empty($nt['fonte_url']) && is_string($nt['fonte_url'])): ?>
                                 <p><a class="back-link" href="<?= e($nt['fonte_url']) ?>" target="_blank" rel="noopener"><?= e($t['eventos']['fonte']) ?> ↗</a></p>
                             <?php endif; ?>
@@ -282,7 +282,7 @@ case 'blog':
             <?php endif; ?>
 
             <article class="article-body">
-                <?= asodomi_linkify(sanitizza_html((string)$art['contenuto'])) ?>
+                <?= sanitizza_html((string)$art['contenuto']) ?>
             </article>
 
             <p class="center" style="margin-top:2.5rem">
@@ -345,92 +345,11 @@ case 'blog':
 <?php break;
 
 case 'ayuda':
-    $step = isset($_GET['step']) ? (int)$_GET['step'] : 1;
-    $f = $t['ayuda'];
-?>
-
-    <section class="page-head">
-        <div class="container">
-            <h1><?= e($f['title']) ?></h1>
-            <p class="lead"><?= e($f['text']) ?></p>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container narrow">
-            <?php if ($form_ok): ?><div class="alert alert-ok" role="status">✅ <?= e($f['success']) ?></div><?php endif; ?>
-            <?php if ($form_err): ?><div class="alert alert-err" role="alert">⚠️ <?= e($f['error']) ?></div><?php endif; ?>
-
-            <?php if ($step === 1): ?>
-                <!-- Step 1: Help type selection -->
-                <div class="wizard-steps">
-                    <div class="step-indicator">
-                        <span class="step active">1</span>
-                        <span class="step">2</span>
-                    </div>
-                </div>
-
-                <form method="get" action="<?= e(url($lang, 'ayuda')) ?>" class="service-selector">
-                    <input type="hidden" name="step" value="2">
-                    <fieldset>
-                        <legend><?= e($f['wizard_step1_title'] ?? 'Di che tipo di aiuto hai bisogno?') ?></legend>
-                        <?php foreach ($f['form_type_opt'] as $opt): ?>
-                            <label class="service-option">
-                                <input type="radio" name="tipo_ayuda" value="<?= e($opt) ?>" required>
-                                <span><?= e($opt) ?></span>
-                            </label>
-                        <?php endforeach; ?>
-                    </fieldset>
-                    <button type="submit" class="btn btn-primary btn-block"><?= e($f['wizard_continua'] ?? 'Continua') ?></button>
-                </form>
-
-            <?php else: ?>
-                <!-- Step 2: Details -->
-                <div class="wizard-steps">
-                    <div class="step-indicator">
-                        <span class="step done">1</span>
-                        <span class="step active">2</span>
-                    </div>
-                </div>
-
-                <form class="form" method="post" action="<?= e(asset('/enviar.php')) ?>">
-                    <input type="hidden" name="form_type" value="ayuda">
-                    <input type="hidden" name="lang" value="<?= e($lang) ?>">
-                    <input type="hidden" name="step" value="2">
-                    <input type="hidden" name="tipo_ayuda" value="<?= e($_GET['tipo_ayuda'] ?? '') ?>">
-                    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-                    <label><?= e($f['form_name']) ?>
-                        <input type="text" name="nombre" required maxlength="120" autocomplete="name">
-                    </label>
-
-                    <label><?= e($f['form_email']) ?>
-                        <input type="email" name="email" required maxlength="160" autocomplete="email">
-                    </label>
-
-                    <label><?= e($f['form_phone']) ?>
-                        <input type="tel" name="telefono" maxlength="40" autocomplete="tel">
-                    </label>
-
-                    <label><?= e($f['form_msg']) ?>
-                        <textarea name="mensaje" rows="6" required maxlength="3000" placeholder="<?= e($f['form_msg_placeholder'] ?? 'Descrivi la tua situazione...') ?>"></textarea>
-                    </label>
-
-                    <a href="<?= e(url($lang, 'ayuda')) ?>" class="btn btn-ghost"><?= e($f['wizard_indietro'] ?? 'Indietro') ?></a>
-                    <button type="submit" class="btn btn-primary btn-block" data-sending="<?= e($t['forms']['sending']) ?>"><?= e($f['submit']) ?></button>
-                </form>
-            <?php endif; ?>
-        </div>
-    </section>
-
-<?php break;
-
 case 'cita':
-    $step = isset($_GET['step']) ? (int)$_GET['step'] : 1;
-    $f = $t['cita'];
-
-    // Step 1: Choose service type
-    // Step 2: Fill details with smart defaults
+    $es_cita = ($page === 'cita');
+    $f = $es_cita ? $t['cita'] : $t['ayuda'];
+    $accion_ok   = $form_ok ? $f['success'] : '';
+    $accion_err  = $form_err ? $f['error'] : '';
 ?>
 
     <section class="page-head">
@@ -442,91 +361,69 @@ case 'cita':
 
     <section class="section">
         <div class="container narrow">
-            <?php if ($form_ok): ?><div class="alert alert-ok" role="status">✅ <?= e($f['success']) ?></div><?php endif; ?>
-            <?php if ($form_err): ?><div class="alert alert-err" role="alert">⚠️ <?= e($f['error']) ?></div><?php endif; ?>
+            <?php if ($accion_ok): ?><div class="alert alert-ok" role="status">✅ <?= e($accion_ok) ?></div><?php endif; ?>
+            <?php if ($accion_err): ?><div class="alert alert-err" role="alert">⚠️ <?= e($accion_err) ?></div><?php endif; ?>
 
-            <?php if ($step === 1): ?>
-                <!-- Step 1: Service selection -->
-                <div class="wizard-steps">
-                    <div class="step-indicator">
-                        <span class="step active">1</span>
-                        <span class="step">2</span>
-                    </div>
-                </div>
+            <form class="form" method="post" action="<?= e(asset('/enviar.php')) ?>">
+                <input type="hidden" name="form_type" value="<?= $es_cita ? 'cita' : 'ayuda' ?>">
+                <input type="hidden" name="lang" value="<?= e($lang) ?>">
+                <!-- Campo trampa anti-spam: los bots lo rellenan, las personas no lo ven -->
+                <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-                <form method="get" action="<?= e(url($lang, 'cita')) ?>" class="service-selector">
-                    <input type="hidden" name="step" value="2">
-                    <fieldset>
-                        <legend><?= e($f['wizard_step1_title'] ?? 'Che tipo di appuntamento cerchi?') ?></legend>
-                        <?php foreach ($f['form_service_opt'] as $opt): ?>
-                            <label class="service-option">
-                                <input type="radio" name="servizio" value="<?= e($opt) ?>" required>
-                                <span><?= e($opt) ?></span>
-                            </label>
-                        <?php endforeach; ?>
-                    </fieldset>
-                    <button type="submit" class="btn btn-primary btn-block"><?= e($f['wizard_continua'] ?? 'Continua') ?></button>
-                </form>
+                <label><?= e($f['form_name']) ?>
+                    <input type="text" name="nombre" required maxlength="120">
+                </label>
 
-            <?php else: ?>
-                <!-- Step 2: Details with smart defaults -->
-                <div class="wizard-steps">
-                    <div class="step-indicator">
-                        <span class="step done">1</span>
-                        <span class="step active">2</span>
-                    </div>
-                </div>
+                <label><?= e($f['form_email']) ?>
+                    <input type="email" name="email" required maxlength="160">
+                </label>
 
-                <form class="form" method="post" action="<?= e(asset('/enviar.php')) ?>">
-                    <input type="hidden" name="form_type" value="cita">
-                    <input type="hidden" name="lang" value="<?= e($lang) ?>">
-                    <input type="hidden" name="step" value="2">
-                    <input type="hidden" name="servizio" value="<?= e($_GET['servizio'] ?? '') ?>">
-                    <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+                <label><?= e($f['form_phone']) ?>
+                    <input type="tel" name="telefono" maxlength="40"
+                           <?= $es_cita ? 'required' : '' ?>>
+                </label>
 
-                    <label><?= e($f['form_name']) ?>
-                        <input type="text" name="nombre" required maxlength="120" autocomplete="name">
+                <?php if ($es_cita): ?>
+                    <label><?= e($f['form_service']) ?>
+                        <select name="servicio" required>
+                            <?php foreach ($f['form_service_opt'] as $opt): ?><option value="<?= e($opt) ?>"><?= e($opt) ?></option><?php endforeach; ?>
+                        </select>
                     </label>
-
-                    <label><?= e($f['form_email']) ?>
-                        <input type="email" name="email" required maxlength="160" autocomplete="email">
+                    <label><?= e($f['form_date']) ?>
+                        <input type="date" name="fecha" required min="<?= date('Y-m-d') ?>">
                     </label>
-
-                    <label><?= e($f['form_phone']) ?>
-                        <input type="tel" name="telefono" maxlength="40" required autocomplete="tel">
+                    <label><?= e($f['form_time']) ?>
+                        <select name="horario" required>
+                            <?php foreach ($f['form_time_opt'] as $opt): ?><option value="<?= e($opt) ?>"><?= e($opt) ?></option><?php endforeach; ?>
+                        </select>
                     </label>
-
-                    <div class="form-row">
-                        <label><?= e($f['form_date']) ?>
-                            <input type="date" name="fecha" required min="<?= date('Y-m-d') ?>" value="<?= e($_GET['fecha'] ?? date('Y-m-d', strtotime('+1 weekday'))) ?>">
-                        </label>
-                        <label><?= e($f['form_time']) ?>
-                            <select name="horario" required>
-                                <?php foreach ($f['form_time_opt'] as $opt): ?>
-                                    <option value="<?= e($opt) ?>" <?= (($_GET['horario'] ?? '') === $opt) ? 'selected' : '' ?>><?= e($opt) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </label>
-                    </div>
-
                     <label><?= e($f['form_mode']) ?>
-                        <select name="modalita" required>
+                        <select name="modalidad" required>
                             <?php foreach ($f['form_mode_opt'] as $opt): ?><option value="<?= e($opt) ?>"><?= e($opt) ?></option><?php endforeach; ?>
                         </select>
                     </label>
-
                     <label><?= e($f['form_msg']) ?>
-                        <textarea name="mensaje" rows="4" maxlength="2000" placeholder="<?= e($f['form_msg_placeholder'] ?? 'Note aggiuntive...') ?>"></textarea>
+                        <textarea name="mensaje" rows="4" maxlength="2000"></textarea>
                     </label>
+                <?php else: ?>
+                    <label><?= e($f['form_type']) ?>
+                        <select name="tipo_ayuda" required>
+                            <?php foreach ($f['form_type_opt'] as $opt): ?><option value="<?= e($opt) ?>"><?= e($opt) ?></option><?php endforeach; ?>
+                        </select>
+                    </label>
+                    <label><?= e($f['form_msg']) ?>
+                        <textarea name="mensaje" rows="6" required maxlength="3000"></textarea>
+                    </label>
+                <?php endif; ?>
 
-                    <a href="<?= e(url($lang, 'cita')) ?>" class="btn btn-ghost"><?= e($f['wizard_indietro'] ?? 'Indietro') ?></a>
-                    <button type="submit" class="btn btn-primary btn-block" data-sending="<?= e($t['forms']['sending']) ?>"><?= e($f['submit']) ?></button>
-                </form>
-            <?php endif; ?>
+                <p class="muted small"><?= e($f['form_privacy']) ?></p>
+                <button type="submit" class="btn btn-primary btn-block" data-sending="<?= e($t['forms']['sending']) ?>"><?= e($f['submit']) ?></button>
+            </form>
         </div>
     </section>
 
 <?php break;
+
 case 'contacto': ?>
 
     <section class="page-head">
@@ -889,82 +786,6 @@ case 'privacy': ?>
     </section>
 
 <?php break;
-
-case 'nosotros': ?>
-
-    <section class="page-head">
-        <div class="container narrow">
-            <h1><?= e($t['nosotros']['title']) ?></h1>
-            <p class="lead"><?= e($t['nosotros']['intro']) ?></p>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container narrow article-body">
-            <h2><?= e($t['nosotros']['mission_t']) ?></h2>
-            <p><?= e($t['nosotros']['mission_d']) ?></p>
-            <h2><?= e($t['nosotros']['vision_t']) ?></h2>
-            <p><?= e($t['nosotros']['vision_d']) ?></p>
-            <h2><?= e($t['nosotros']['values_t']) ?></h2>
-            <ul>
-                <?php foreach ($t['nosotros']['values'] as $val): ?>
-                    <li><?= e($val) ?></li>
-                <?php endforeach; ?>
-            </ul>
-            <p class="center" style="margin-top:2rem">
-                <a class="btn btn-primary" href="<?= e(url($lang, 'contacto')) ?>">Contatti</a>
-                <a class="btn btn-ghost" href="<?= e(url($lang, 'iscrizione')) ?>">Unisciti</a>
-            </p>
-        </div>
-    </section>
-
-<?php break;
-
-case 'faq': ?>
-
-    <section class="page-head">
-        <div class="container narrow">
-            <h1><?= e($t['faq']['title']) ?></h1>
-            <p class="lead"><?= e($t['faq']['intro']) ?></p>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container narrow">
-            <?php foreach ($t['faq']['items'] as [$q, $a]): ?>
-                <details class="faq-item">
-                    <summary><?= e($q) ?></summary>
-                    <p><?= e($a) ?></p>
-                </details>
-            <?php endforeach; ?>
-        </div>
-    </section>
-
-<script type="application/ld+json">
-<?= json_encode([
-    '@context' => 'https://schema.org',
-    '@type' => 'FAQPage',
-    'mainEntity' => array_map(function ($item) {
-        [$q, $a] = $item;
-        return [
-            '@type' => 'Question',
-            'name' => $q,
-            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $a],
-        ];
-    }, $t['faq']['items']),
-], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) ?>
-</script>
-
-<?php break;
-
-
-case 'newsletter_subscribe':
-    // Handled by newsletter_subscribe.php via .htaccess
-    break;
-
-case 'newsletter_unsubscribe':
-    // Handled by newsletter_unsubscribe.php via .htaccess
-    break;
 
 endswitch;
 

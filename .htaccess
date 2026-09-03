@@ -25,10 +25,6 @@ DirectoryIndex index.php
     # Dettaglio articolo blog: /es/blog/mio-articolo
     RewriteRule ^([a-z]{2})/blog/([a-z0-9-]+)/?$ index.php?lang=$1&page=blog&slug=$2 [L,QSA]
 
-    # Newsletter subscribe/unsubscribe
-    RewriteRule ^([a-z]{2})/newsletter_subscribe/?$ newsletter_subscribe.php?lang=$1 [L,QSA]
-    RewriteRule ^([a-z]{2})/newsletter_unsubscribe/?$ newsletter_unsubscribe.php?lang=$1 [L,QSA]
-
     # /es  o  /es/
     RewriteRule ^([a-z]{2})/?$ index.php?lang=$1 [L,QSA]
 
@@ -48,7 +44,7 @@ DirectoryIndex index.php
     Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Compresión y caché para recursos estaticos
+# Compresión y caché para recursos estáticos
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml
 </IfModule>
