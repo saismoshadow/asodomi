@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASODOMI – Offline</title>
+<link rel="icon" type="image/png" href="/assets/img/icon-192.png">
+<style>
+    body {
+        margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+        font-family: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+        background: #fdf8f2; color: #22252a; text-align: center; padding: 1.5rem;
+    }
+    .box { max-width: 420px; }
+    img { width: 120px; height: auto; margin-bottom: 1rem; }
+    h1 { font-size: 1.4rem; margin: .3rem 0; color: #0b3d91; }
+    p { line-height: 1.6; color: #5b6472; }
+    button {
+        margin-top: 1.2rem; padding: .7rem 1.6rem; border: 0; border-radius: 999px;
+        background: #0b3d91; color: #fff; font-size: 1rem; cursor: pointer;
+    }
+    button:hover { background: #072a66; }
+</style>
+</head>
+<body>
+<div class="box">
+    <img src="/assets/img/logo.png" alt="ASODOMI">
+    <h1 id="t">Sei offline</h1>
+    <p id="m">Controlla la connessione a internet e riprova. Le pagine già visitate restano disponibili.</p>
+    <button onclick="location.reload()" id="r">Riprova</button>
+</div>
+<script>
+(function () {
+    var t = {
+        it: ['Sei offline', 'Controlla la connessione a internet e riprova. Le pagine già visitate restano disponibili.', 'Riprova'],
+        es: ['Sin conexión', 'Comprueba tu conexión a internet e inténtalo de nuevo. Las páginas ya visitadas siguen disponibles.', 'Reintentar'],
+        de: ['Offline', 'Prüfe deine Internetverbindung und versuche es erneut. Bereits besuchte Seiten bleiben verfügbar.', 'Erneut versuchen'],
+        fr: ['Hors ligne', 'Vérifie ta connexion internet et réessaie. Les pages déjà visitées restent disponibles.', 'Réessayer']
+    };
+    var l = (navigator.language || 'it').slice(0, 2);
+    if (t[l]) {
+        document.getElementById('t').textContent = t[l][0];
+        document.getElementById('m').textContent = t[l][1];
+        document.getElementById('r').textContent = t[l][2];
+    }
+})();
+</script>
+</body>
+</html>
