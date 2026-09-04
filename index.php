@@ -667,6 +667,10 @@ case 'area-soci':
                     <p style="margin:1.2rem 0 0"><a href="<?= e(url($lang, 'area-soci')) ?>?esci=1">🚪 <?= e($fa['esci']) ?></a></p>
                 </aside>
 
+                <div class="newsletter-section" style="margin-top:2rem;">
+                    <?php require __DIR__ . '/inc/newsletter_form.php'; ?>
+                </div>
+
                 <div>
                     <h2><?= e($fa['notizie_title']) ?></h2>
                     <?php
