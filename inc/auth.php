@@ -42,6 +42,12 @@ function richiedi_ruolo(array $ruoli): array
     return $u;
 }
 
+/** Richiede che l'utente sia amministratore */
+function admin_required(): void
+{
+    richiedi_ruolo(['admin']);
+}
+
 /** Intenta iniciar sesión (admin/redattore); devuelve true/false */
 function login(string $email, string $password): bool
 {
