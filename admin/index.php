@@ -47,6 +47,8 @@ $solo_admin = [
     'soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',
     'utenti', 'salva-utente', 'elimina-utente',
+    'newsletter', 'newsletter_iscritti', 'newsletter_nuova', 'newsletter_elimina',
+    'newsletter_export', 'newsletter_iscritto_delete',
 ];
 // Articoli, notizie ed eventi sono gestibili sia da admin che da redattore
 // (le rotte eventi/notizie NON sono in $solo_admin)
@@ -64,6 +66,8 @@ $pagine_admin = [
     'soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',
     'utenti', 'salva-utente', 'elimina-utente',
+    'newsletter', 'newsletter_iscritti', 'newsletter_nuova', 'newsletter_elimina',
+    'newsletter_export', 'newsletter_iscritto_delete',
 ];
 if (!in_array($route, $pagine_admin, true)) {
     $route = 'dashboard';
@@ -78,6 +82,7 @@ $senza_layout = [
     'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export',
     'elimina-documento-socio',
     'salva-utente', 'elimina-utente',
+    'newsletter_elimina', 'newsletter_export', 'newsletter_iscritto_delete',
 ];
 if (in_array($route, $senza_layout, true)) {
     require __DIR__ . '/pages/' . $route . '.php';
