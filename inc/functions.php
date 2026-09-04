@@ -149,3 +149,12 @@ function asodomi_fecha(string $ymd, string $lang): string
     $fmt = $map[$lang] ?? 'd/m/Y';
     return date($fmt, $ts);
 }
+
+
+/**
+ * Genera URL per l'area admin.
+ */
+function admin_url(string $route = ''): string
+{
+    return asset('/admin/') . ($route !== '' ? '?route=' . rawurlencode($route) : '');
+}
