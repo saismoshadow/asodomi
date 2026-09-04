@@ -8,6 +8,7 @@ $nav_admin = [
     'articoli'  => ['📰', 'Contenuti'],
     'documenti' => ['📁', 'Documenti soci'],
     'soci'      => ['👥', 'Soci'],
+    'newsletter'=> ['📧', 'Newsletter'],
     'utenti'    => ['🔑', 'Utenti'],
 ];
 $gruppo_attivo = [
@@ -17,6 +18,8 @@ $gruppo_attivo = [
                     'notizie', 'notizia', 'salva-notizia', 'elimina-notizia'],
     'documenti' => ['documenti', 'salva-documento', 'elimina-documento'],
     'soci'      => ['soci', 'socio', 'salva-socio', 'elimina-socio', 'cambia-stato-socio', 'soci-export'],
+    'newsletter'=> ['newsletter', 'newsletter_iscritti', 'newsletter_nuova', 'newsletter_elimina',
+                    'newsletter_export', 'newsletter_iscritto_delete'],
     'utenti'    => ['utenti', 'salva-utente', 'elimina-utente'],
 ];
 $ruolo_utente = $utente['ruolo'];
@@ -39,7 +42,8 @@ $ruolo_utente = $utente['ruolo'];
         <nav class="admin-nav">
             <?php foreach ($nav_admin as $r => [$icona, $etichetta]):
                 if ($r === 'utenti' && $ruolo_utente !== 'admin') continue;
-                if ($r === 'soci' && $ruolo_utente !== 'admin') continue; ?>
+                if ($r === 'soci' && $ruolo_utente !== 'admin') continue;
+                if ($r === 'newsletter' && $ruolo_utente !== 'admin') continue; ?>
                 <a href="<?= e(admin_url($r)) ?>" class="<?= in_array($route, $gruppo_attivo[$r], true) ? 'active' : '' ?>">
                     <?= $icona ?> <?= $etichetta ?>
                 </a>
