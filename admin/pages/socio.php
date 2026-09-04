@@ -18,6 +18,9 @@ if (!$socio) {
     <?= csrf_campo() ?>
     <input type="hidden" name="id" value="<?= (int)$socio['id'] ?>">
 
+    <label>Numero socio
+        <input type="text" name="numero_socio" maxlength="20" value="<?= e($socio['numero_socio'] ?? '') ?>" readonly style="background:#f5f5f5;" title="Assegnato automaticamente">
+    </label>
     <label>Nome *
         <input type="text" name="nome" required maxlength="160" value="<?= e($socio['nome']) ?>">
     </label>

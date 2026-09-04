@@ -23,11 +23,18 @@ if ($page === 'area-soci') {
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['socio_login'])) {
         csrf_verifica();
-        if (login_socio((string)($_POST['email'] ?? ''), (string)($_POST['password'] ?? ''))) {
+        $result = login_socio(
+            (string)($_POST['email'] ?? ''),
+            (string)($_POST['password'] ?? ''),
+            (string)($_POST['website_url'] ?? '')
+        );
+        if ($result['success']) {
             header('Location: ' . url($lang, 'area-soci'));
             exit;
         }
         $login_errore = true;
+        // Salva errore specifico per eventuale uso futuro
+        $_SESSION['socio_login_error'] = $result['error'] ?? 'generic';
     }
 }
 
@@ -604,6 +611,8 @@ case 'area-soci':
             <form class="form soci-login" method="post" action="<?= e(url($lang, 'area-soci')) ?>">
                 <?= csrf_campo() ?>
                 <input type="hidden" name="socio_login" value="1">
+                <!-- Honeypot field (invisibile agli utenti, rileva bot) -->
+                <input type="text" name="website_url" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
                 <label><?= e($fa['email']) ?>
                     <input type="email" name="email" required maxlength="160" autocomplete="username">
                 </label>
@@ -613,11 +622,13 @@ case 'area-soci':
                 <button type="submit" class="btn btn-primary btn-block"><?= e($fa['accedi']) ?></button>
             </form>
 
+            <p class="center muted" style="margin-top:0.75rem">
+                <a href="<?= e(url($lang, 'password_dimenticata')) ?>"><?= e($fa['password_dimenticata'] ?? 'Password dimenticata?') ?></a>
+            </p>
             <p class="center muted" style="margin-top:1.5rem">
                 <?= e($t['iscrizione']['title']) ?>:
                 <a href="<?= e(url($lang, 'iscrizione')) ?>"><strong><?= e($t['iscrizione']['submit']) ?></strong></a>
             </p>
-<?php require __DIR__ . '/inc/newsletter_form.php'; ?>
         </div>
     </section>
 
@@ -683,7 +694,6 @@ case 'area-soci':
                 </div>
             </div>
 
-        <?php require __DIR__ . '/inc/newsletter_form.php'; ?>
         <?php elseif ($sezione === 'notizie'): ?>
             <h2 class="section-title"><?= e($fa['notizie_title']) ?></h2>
             <p class="section-lead"><?= e($fa['notizie_text']) ?></p>
@@ -788,6 +798,15 @@ case 'privacy': ?>
     </section>
 
 <?php break;
+
+
+case 'password_dimenticata':
+    // Handled by password_dimenticata.php via .htaccess
+    break;
+
+case 'reimposta_password':
+    // Handled by reimposta_password.php via .htaccess
+    break;
 
 endswitch;
 

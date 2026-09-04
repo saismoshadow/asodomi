@@ -34,7 +34,3 @@ Thumbs.db
 # ── Sistemi / cache ───────────────────────────────────────
 *.sql
 *.sql.gz
-
-# ── Backup temporanei / snapshot ──────────────────────────
-_backup_*/
-cron/*.sql

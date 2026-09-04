@@ -25,6 +25,10 @@ DirectoryIndex index.php
     # Dettaglio articolo blog: /es/blog/mio-articolo
     RewriteRule ^([a-z]{2})/blog/([a-z0-9-]+)/?$ index.php?lang=$1&page=blog&slug=$2 [L,QSA]
 
+    # Password reset
+    RewriteRule ^([a-z]{2})/password_dimenticata/?$ password_dimenticata.php?lang=$1 [L,QSA]
+    RewriteRule ^([a-z]{2})/reimposta_password/?$ reimposta_password.php?lang=$1 [L,QSA]
+
     # /es  o  /es/
     RewriteRule ^([a-z]{2})/?$ index.php?lang=$1 [L,QSA]
 
