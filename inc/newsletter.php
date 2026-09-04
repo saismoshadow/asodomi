@@ -6,6 +6,14 @@
 require_once __DIR__ . '/db.php';
 require_once __DIR__ . '/config.php';
 
+// PHPMailer per invio SMTP (vendor/PHPMailer). File caricano solo se presenti.
+$__pm = __DIR__ . '/../vendor/PHPMailer/PHPMailer.php';
+if (is_file($__pm)) {
+    require_once $__pm;
+    require_once __DIR__ . '/../vendor/PHPMailer/Exception.php';
+    require_once __DIR__ . '/../vendor/PHPMailer/SMTP.php';
+}
+
 /* ── Costanti di configurazione (override possibili in config.php) ── */
 
 if (!defined('NL_SENDER_NAME'))  define('NL_SENDER_NAME', SITE_NAME);
@@ -277,7 +285,44 @@ function nl_invia(string $to, string $oggetto, string $htmlBody, string $fromNam
         return false;
     }
 
-$encodedSubject = '=?UTF-8?B?' . base64_encode($oggetto) . '?=';
+    // ── SMTP con PHPMailer (se disponibile e configurato) ──────────────────
+    if (class_exists('\\PHPMailer\\PHPMailer\\PHPMailer') && defined('SMTP_HOST')) {
+        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host       = SMTP_HOST;
+            $mail->Port       = defined('SMTP_PORT') ? (int)SMTP_PORT : 587;
+            $mail->SMTPAuth   = (bool)(defined('SMTP_AUTH') ? SMTP_AUTH : true);
+            $mail->Username   = defined('SMTP_USER') ? SMTP_USER : '';
+            $mail->Password   = defined('SMTP_PASS') ? SMTP_PASS : '';
+            $secure = defined('SMTP_SECURE') ? strtolower(SMTP_SECURE) : 'starttls';
+            if ($secure === 'ssl' || $secure === 'tls') {
+                $mail->SMTPSecure = $secure === 'ssl' ? 'ssl' : 'tls';
+            } // 'starttls'/altro -> lasciato PHPMailer default 'tls'
+            $mail->Timeout = 20;
+            $mail->CharSet = 'UTF-8';
+            if (defined('SMTP_DEBUG') && SMTP_DEBUG) {
+                $mail->SMTPDebug = \PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+            }
+
+            $mail->setFrom($fromEmail, $fromName);
+            $mail->addReplyTo($replyTo, $fromName);
+            $mail->addAddress($to);
+            $mail->Subject = $oggetto;
+            $mail->isHTML(true);
+            $mail->Body = $htmlBody;
+            $mail->AltBody = nl_plain_from_html($htmlBody);
+
+            $sent = $mail->send();
+            return $sent;
+                } catch (\Throwable $e) {
+            nl_log("SMTP fallito verso " . $to . ": " . $e->getMessage(), "ERRORE");
+            // Fallback to mail() if SMTP fails
+        }
+    }
+
+    // ── Fallback: mail() di sistema (solo se PHPMailer non disponibile) ─────
+    $encodedSubject = '=?UTF-8?B?' . base64_encode($oggetto) . '?=';
     $headers = implode("\r\n", [
         'MIME-Version: 1.0',
         'Content-Type: text/html; charset=UTF-8',
