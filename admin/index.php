@@ -7,10 +7,6 @@ header('Cache-Control: no-cache, must-revalidate');
 require_once __DIR__ . '/../inc/functions.php';
 require_once __DIR__ . '/../inc/auth.php';
 
-function admin_url(string $route = ''): string
-{
-    return asset('/admin/') . ($route !== '' ? '?route=' . rawurlencode($route) : '');
-}
 
 $route = preg_replace('/[^a-z0-9-_.]/', '', strtolower($_GET['route'] ?? 'dashboard'));
 
