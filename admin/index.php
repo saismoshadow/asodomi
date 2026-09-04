@@ -10,6 +10,14 @@ require_once __DIR__ . '/../inc/auth.php';
 
 $route = preg_replace('/[^a-z0-9-_.]/', '', strtolower($_GET['route'] ?? 'dashboard'));
 
+// Determine language from session or URL parameter
+$lang = $_SESSION['admin_lang'] ?? ($_GET['lang'] ?? DEFAULT_LANG);
+if (!in_array($lang, $GLOBALS['ASODOMI_LANGS'], true)) {
+    $lang = DEFAULT_LANG;
+}
+$_SESSION['admin_lang'] = $lang;
+$t = asodomi_load_lang($lang);
+
 // ── Logout e login non richiedono autenticazione ─────────────────────
 if ($route === 'logout') {
     logout();
