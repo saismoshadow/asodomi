@@ -20,7 +20,7 @@ DirectoryIndex index.php
     RewriteRule ^ - [L]
 
     # Area amministrazione: /admin/... → admin/index.php
-    RewriteRule ^admin(/(.*))?$ admin/index.php [L,QSA]
+    RewriteRule ^admin/(.*)$ admin/index.php?route=$1 [L,QSA]
 
     # Dettaglio articolo blog: /es/blog/mio-articolo
     RewriteRule ^([a-z]{2})/blog/([a-z0-9-]+)/?$ index.php?lang=$1&page=blog&slug=$2 [L,QSA]

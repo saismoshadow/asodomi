@@ -1,5 +1,6 @@
 <?php
 /**
+<?php error_log("DEBUG: Start newsletter_nuova.php"); flush(); ?>
  * ASODOMI – Crea / modifica / anteprima / email di prova / programmazione invio newsletter.
  */
 $pdo = db();
